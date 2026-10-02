@@ -28,7 +28,7 @@ Defaults when a flag is left out: persona `inputs/persona.shyam.json`, liveness 
 node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.test.mjs
 ```
 
-16 tests. They run the CLI as a black box into a temp directory and read what it wrote. The scorer they exercise is the real `scripts/score/role-scorer.mjs`; nothing here re-implements it. One test pins upstream behaviour (a missing liveness gate is treated as open) so a change to the scorer is noticed.
+17 tests. They run the CLI as a black box into a temp directory and read what it wrote. The scorer they exercise is the real `scripts/score/role-scorer.mjs`; nothing here re-implements it. One test pins upstream behaviour (a missing liveness gate is treated as open) so a change to the scorer is noticed.
 
 ## What it reads
 

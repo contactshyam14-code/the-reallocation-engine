@@ -6,7 +6,7 @@
       "value": "2026-10-01",
       "label": "your-input"
     },
-    "generated_at": "2026-10-02T03:26:27.587Z",
+    "generated_at": "2026-10-02T03:18:34.735Z",
     "inputs": [
       {
         "role": "persona",
@@ -15,8 +15,8 @@
       },
       {
         "role": "liveness observations",
-        "path": "scripts/contrib/2026fa/contactshyam14-code-em-network-targets/inputs/liveness.2026-10-01.json",
-        "sha256": "8c6a44522eba276eeb06d5d54d34c42d58a4786cd83a4b7361e521ae33c596c0"
+        "path": "scripts/contrib/2026fa/contactshyam14-code-em-network-targets/fixtures/break-liveness-unmatched.json",
+        "sha256": "245b9922d10bf6da4502e6de657712453e1c919052a440565b8d0efbf6ae764b"
       },
       {
         "role": "80 Days company table",
@@ -111,13 +111,13 @@
       "status": "pass"
     },
     "G2_liveness": {
-      "held": 52,
-      "scored": 5
+      "held": 57,
+      "scored": 0
     },
     "G3_timeline": {
       "apply_factor": 1,
       "network_factor": 1,
-      "closed_below": 0.05
+      "closed_below": "scorer not run"
     },
     "G4_visa_path": {
       "status": "awaiting human sign-off",
@@ -194,20 +194,20 @@
     "matched_candidates": 0
   },
   "scorer": {
-    "ran": true,
-    "command": "node scripts/score/role-scorer.mjs course/2026fa/submissions/contactshyam14-code/runs/03-scored/roles.json --out-dir course/2026fa/submissions/contactshyam14-code/runs/03-scored",
-    "stdout": "✓ scored 5 roles → Apply 1 · Consider 0 · Skip 4 (skip 80%)\n  course\\2026fa\\submissions\\contactshyam14-code\\runs\\03-scored\\role-scores.json  +  course\\2026fa\\submissions\\contactshyam14-code\\runs\\03-scored\\role-scores.md\n",
-    "why_not": null,
-    "skip_summary": "4 of 5 scored roles (80%)"
+    "ran": false,
+    "command": null,
+    "stdout": "",
+    "why_not": "no candidate has a usable liveness observation, so there is nothing the scorer can decide",
+    "skip_summary": null
   },
   "counts": {
     "companies_in_csv": 30369,
     "companies_with_h1b": 1557,
     "candidates": 57,
     "by_bucket": {
-      "network": 4,
-      "apply": 1,
-      "check-liveness": 52,
+      "network": 0,
+      "apply": 0,
+      "check-liveness": 57,
       "skip": 0
     },
     "by_soc": {
@@ -230,618 +230,19 @@
     "Any visa-law conclusion — timeline factors are arithmetic on the person's own dates and assumptions.",
     "Fit between this person and any posting — not assessed."
   ],
-  "unmatched_liveness_observations": [],
+  "unmatched_liveness_observations": [
+    {
+      "company": "Quillfeather Assembly Works",
+      "checked_on": "2026-10-01",
+      "why": "not in the company CSV"
+    },
+    {
+      "company": "1LIFE HEALTHCARE INC",
+      "checked_on": "2026-10-01",
+      "why": "in the CSV but not a candidate (no H-1B record or no matching title)"
+    }
+  ],
   "candidates": [
-    {
-      "role_id": "nt-genies-l10901",
-      "company": "GENIES INC",
-      "evidence": {
-        "matched_titles": {
-          "value": [
-            "Project Manager"
-          ],
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L10901"
-        },
-        "title_matches": [
-          {
-            "title": "Project Manager",
-            "soc": "13-1082",
-            "phrase": "project manager",
-            "ambiguous": false,
-            "vocabulary": "persona keyword [your-input]"
-          }
-        ],
-        "soc": {
-          "value": [
-            "13-1082"
-          ],
-          "label": "your-input",
-          "derived_from": "sponsored titles [record] matched against persona keywords [your-input] and BLS/O*NET titles [record]; the table records titles, not SOC codes"
-        },
-        "approvals": {
-          "value": 22,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L10901",
-          "caveat": "all counts in this file are even — probably doubled upstream"
-        },
-        "denials": {
-          "value": 0,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L10901"
-        },
-        "approval_rate": {
-          "value": 100,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L10901"
-        },
-        "median_salary_offered": {
-          "value": 95000,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L10901",
-          "caveat": "company-wide, all sponsored roles — not this occupation"
-        },
-        "tier": {
-          "value": "Proven",
-          "why": "unambiguous title match, approvals 22 ≥ 10, rate 100.0% ≥ 90%",
-          "label": "your-input",
-          "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
-        },
-        "sponsorship_p": {
-          "value": 0.9,
-          "label": "your-input",
-          "derived_from": "persona tier_to_p mapping for tier Proven"
-        },
-        "latest_funding_date": {
-          "value": "2021-04-16",
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L10901"
-        },
-        "latest_funding_amount": {
-          "value": 65000000,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L10901"
-        },
-        "latest_funding_stage": {
-          "value": "Series C",
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L10901",
-          "caveat": "stage is estimated by the upstream pipeline"
-        },
-        "recent_funding": {
-          "value": false,
-          "label": "your-input",
-          "derived_from": "latest_funding_date [record] within 24 months of the as-of date [your-input]"
-        },
-        "formd_sample": {
-          "value": "not in shipped sample",
-          "label": "record",
-          "note": "absence from 200 sampled filings is not evidence of no funding"
-        },
-        "website": {
-          "value": "genies.com",
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L10901",
-          "caveat": "domain guessed from the company name by the upstream pipeline — not a verified careers site"
-        }
-      },
-      "liveness": {
-        "status": "scored",
-        "factor": 0,
-        "checked_on": "2026-10-01",
-        "age_days": 0,
-        "method": "scripts/ats/scan.mjs --dry-run, ashby",
-        "result": "no-matching-open",
-        "evidence": "course/2026fa/submissions/contactshyam14-code/evidence/scan-dry-run-2026-10-01.txt",
-        "board_url": "https://jobs.ashbyhq.com/genies",
-        "board_identity": "unconfirmed",
-        "matching_postings": [],
-        "observed_by": "script",
-        "label": "model-judgment",
-        "notes": [
-          "board identity unconfirmed (the ATS returns no board name) — liveness is a model-judgment until a person confirms the board"
-        ]
-      },
-      "identity_check_required": false,
-      "shares_record_with": [],
-      "timeline_path": "network",
-      "scorer": {
-        "recommendation": "Skip",
-        "machine_recommendation": "Skip",
-        "composite": 0,
-        "reason": "gated: liveness ≈ 0.000 (a closed gate zeroes the composite regardless of votes)",
-        "arithmetic": "(0.9·0.35) × 0 × 1 = 0.000"
-      },
-      "bucket": "network"
-    },
-    {
-      "role_id": "nt-unqork-l28039",
-      "company": "UNQORK INC",
-      "evidence": {
-        "matched_titles": {
-          "value": [
-            "Project Manager"
-          ],
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L28039"
-        },
-        "title_matches": [
-          {
-            "title": "Project Manager",
-            "soc": "13-1082",
-            "phrase": "project manager",
-            "ambiguous": false,
-            "vocabulary": "persona keyword [your-input]"
-          }
-        ],
-        "soc": {
-          "value": [
-            "13-1082"
-          ],
-          "label": "your-input",
-          "derived_from": "sponsored titles [record] matched against persona keywords [your-input] and BLS/O*NET titles [record]; the table records titles, not SOC codes"
-        },
-        "approvals": {
-          "value": 38,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L28039",
-          "caveat": "all counts in this file are even — probably doubled upstream"
-        },
-        "denials": {
-          "value": 0,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L28039"
-        },
-        "approval_rate": {
-          "value": 100,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L28039"
-        },
-        "median_salary_offered": {
-          "value": 120500,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L28039",
-          "caveat": "company-wide, all sponsored roles — not this occupation"
-        },
-        "tier": {
-          "value": "Proven",
-          "why": "unambiguous title match, approvals 38 ≥ 10, rate 100.0% ≥ 90%",
-          "label": "your-input",
-          "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
-        },
-        "sponsorship_p": {
-          "value": 0.9,
-          "label": "your-input",
-          "derived_from": "persona tier_to_p mapping for tier Proven"
-        },
-        "latest_funding_date": {
-          "value": "2020-09-18",
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L28039"
-        },
-        "latest_funding_amount": {
-          "value": 258083770,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L28039"
-        },
-        "latest_funding_stage": {
-          "value": "Series D+",
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L28039",
-          "caveat": "stage is estimated by the upstream pipeline"
-        },
-        "recent_funding": {
-          "value": false,
-          "label": "your-input",
-          "derived_from": "latest_funding_date [record] within 24 months of the as-of date [your-input]"
-        },
-        "formd_sample": {
-          "value": "not in shipped sample",
-          "label": "record",
-          "note": "absence from 200 sampled filings is not evidence of no funding"
-        },
-        "website": {
-          "value": "unqork.com",
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L28039",
-          "caveat": "domain guessed from the company name by the upstream pipeline — not a verified careers site"
-        }
-      },
-      "liveness": {
-        "status": "scored",
-        "factor": 0,
-        "checked_on": "2026-10-01",
-        "age_days": 0,
-        "method": "scripts/ats/scan.mjs --dry-run, greenhouse",
-        "result": "no-matching-open",
-        "evidence": "course/2026fa/submissions/contactshyam14-code/evidence/scan-dry-run-2026-10-01.txt",
-        "board_url": "https://job-boards.greenhouse.io/unqork",
-        "board_identity": "confirmed: Greenhouse board name \"Unqork\"",
-        "matching_postings": [],
-        "observed_by": "script",
-        "label": "record",
-        "notes": []
-      },
-      "identity_check_required": false,
-      "shares_record_with": [],
-      "timeline_path": "network",
-      "scorer": {
-        "recommendation": "Skip",
-        "machine_recommendation": "Skip",
-        "composite": 0,
-        "reason": "gated: liveness ≈ 0.000 (a closed gate zeroes the composite regardless of votes)",
-        "arithmetic": "(0.9·0.35) × 0 × 1 = 0.000"
-      },
-      "bucket": "network"
-    },
-    {
-      "role_id": "nt-sentibiosciences-l23704",
-      "company": "SENTI BIOSCIENCES INC",
-      "evidence": {
-        "matched_titles": {
-          "value": [
-            "R&D Project Manager"
-          ],
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L23704"
-        },
-        "title_matches": [
-          {
-            "title": "R&D Project Manager",
-            "soc": "13-1082",
-            "phrase": "project manager",
-            "ambiguous": false,
-            "vocabulary": "persona keyword [your-input]"
-          }
-        ],
-        "soc": {
-          "value": [
-            "13-1082"
-          ],
-          "label": "your-input",
-          "derived_from": "sponsored titles [record] matched against persona keywords [your-input] and BLS/O*NET titles [record]; the table records titles, not SOC codes"
-        },
-        "approvals": {
-          "value": 4,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L23704",
-          "caveat": "all counts in this file are even — probably doubled upstream"
-        },
-        "denials": {
-          "value": 0,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L23704"
-        },
-        "approval_rate": {
-          "value": 100,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L23704"
-        },
-        "median_salary_offered": {
-          "value": 128814,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L23704",
-          "caveat": "company-wide, all sponsored roles — not this occupation"
-        },
-        "tier": {
-          "value": "Likely",
-          "why": "below the Proven bar: approvals 4 < 10",
-          "label": "your-input",
-          "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
-        },
-        "sponsorship_p": {
-          "value": 0.6,
-          "label": "your-input",
-          "derived_from": "persona tier_to_p mapping for tier Likely"
-        },
-        "latest_funding_date": {
-          "value": "2024-12-09",
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L23704"
-        },
-        "latest_funding_amount": {
-          "value": 120594900,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L23704"
-        },
-        "latest_funding_stage": {
-          "value": "Series B",
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L23704",
-          "caveat": "stage is estimated by the upstream pipeline"
-        },
-        "recent_funding": {
-          "value": true,
-          "label": "your-input",
-          "derived_from": "latest_funding_date [record] within 24 months of the as-of date [your-input]"
-        },
-        "formd_sample": {
-          "value": "not in shipped sample",
-          "label": "record",
-          "note": "absence from 200 sampled filings is not evidence of no funding"
-        },
-        "website": {
-          "value": "sentibiosciences.com",
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L23704",
-          "caveat": "domain guessed from the company name by the upstream pipeline — not a verified careers site"
-        }
-      },
-      "liveness": {
-        "status": "scored",
-        "factor": 0,
-        "checked_on": "2026-10-01",
-        "age_days": 0,
-        "method": "scripts/ats/scan.mjs --dry-run, lever",
-        "result": "no-matching-open",
-        "evidence": "course/2026fa/submissions/contactshyam14-code/evidence/scan-dry-run-2026-10-01.txt",
-        "board_url": "https://jobs.lever.co/sentibio",
-        "board_identity": "unconfirmed",
-        "matching_postings": [],
-        "observed_by": "script",
-        "label": "model-judgment",
-        "notes": [
-          "board identity unconfirmed (the ATS returns no board name) — liveness is a model-judgment until a person confirms the board"
-        ]
-      },
-      "identity_check_required": false,
-      "shares_record_with": [],
-      "timeline_path": "network",
-      "scorer": {
-        "recommendation": "Skip",
-        "machine_recommendation": "Skip",
-        "composite": 0,
-        "reason": "gated: liveness ≈ 0.000 (a closed gate zeroes the composite regardless of votes)",
-        "arithmetic": "(0.6·0.35) × 0 × 1 = 0.000"
-      },
-      "bucket": "network"
-    },
-    {
-      "role_id": "nt-rondoenergy-l22817",
-      "company": "RONDO ENERGY INC",
-      "evidence": {
-        "matched_titles": {
-          "value": [
-            "Senior Construction Project Manager"
-          ],
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L22817"
-        },
-        "title_matches": [
-          {
-            "title": "Senior Construction Project Manager",
-            "soc": "13-1082",
-            "phrase": "project manager",
-            "ambiguous": false,
-            "vocabulary": "persona keyword [your-input]"
-          }
-        ],
-        "soc": {
-          "value": [
-            "13-1082"
-          ],
-          "label": "your-input",
-          "derived_from": "sponsored titles [record] matched against persona keywords [your-input] and BLS/O*NET titles [record]; the table records titles, not SOC codes"
-        },
-        "approvals": {
-          "value": 2,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L22817",
-          "caveat": "all counts in this file are even — probably doubled upstream"
-        },
-        "denials": {
-          "value": 0,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L22817"
-        },
-        "approval_rate": {
-          "value": 100,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L22817"
-        },
-        "median_salary_offered": {
-          "value": 160000,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L22817",
-          "caveat": "company-wide, all sponsored roles — not this occupation"
-        },
-        "tier": {
-          "value": "Likely",
-          "why": "below the Proven bar: approvals 2 < 10",
-          "label": "your-input",
-          "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
-        },
-        "sponsorship_p": {
-          "value": 0.6,
-          "label": "your-input",
-          "derived_from": "persona tier_to_p mapping for tier Likely"
-        },
-        "latest_funding_date": {
-          "value": "2022-01-04",
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L22817"
-        },
-        "latest_funding_amount": {
-          "value": 25116635,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L22817"
-        },
-        "latest_funding_stage": {
-          "value": "Series B",
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L22817",
-          "caveat": "stage is estimated by the upstream pipeline"
-        },
-        "recent_funding": {
-          "value": false,
-          "label": "your-input",
-          "derived_from": "latest_funding_date [record] within 24 months of the as-of date [your-input]"
-        },
-        "formd_sample": {
-          "value": "not in shipped sample",
-          "label": "record",
-          "note": "absence from 200 sampled filings is not evidence of no funding"
-        },
-        "website": {
-          "value": "rondoenergy.com",
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L22817",
-          "caveat": "domain guessed from the company name by the upstream pipeline — not a verified careers site"
-        }
-      },
-      "liveness": {
-        "status": "scored",
-        "factor": 0,
-        "checked_on": "2026-10-01",
-        "age_days": 0,
-        "method": "scripts/ats/scan.mjs --dry-run, greenhouse",
-        "result": "no-matching-open",
-        "evidence": "course/2026fa/submissions/contactshyam14-code/evidence/scan-dry-run-2026-10-01.txt",
-        "board_url": "https://job-boards.greenhouse.io/rondoenergy",
-        "board_identity": "confirmed: Greenhouse board name \"Rondo Energy\"",
-        "matching_postings": [],
-        "observed_by": "script",
-        "label": "record",
-        "notes": []
-      },
-      "identity_check_required": false,
-      "shares_record_with": [],
-      "timeline_path": "network",
-      "scorer": {
-        "recommendation": "Skip",
-        "machine_recommendation": "Skip",
-        "composite": 0,
-        "reason": "gated: liveness ≈ 0.000 (a closed gate zeroes the composite regardless of votes)",
-        "arithmetic": "(0.6·0.35) × 0 × 1 = 0.000"
-      },
-      "bucket": "network"
-    },
-    {
-      "role_id": "nt-iexgroup-l12869",
-      "company": "IEX GROUP INC",
-      "evidence": {
-        "matched_titles": {
-          "value": [
-            "Project Manager"
-          ],
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L12869"
-        },
-        "title_matches": [
-          {
-            "title": "Project Manager",
-            "soc": "13-1082",
-            "phrase": "project manager",
-            "ambiguous": false,
-            "vocabulary": "persona keyword [your-input]"
-          }
-        ],
-        "soc": {
-          "value": [
-            "13-1082"
-          ],
-          "label": "your-input",
-          "derived_from": "sponsored titles [record] matched against persona keywords [your-input] and BLS/O*NET titles [record]; the table records titles, not SOC codes"
-        },
-        "approvals": {
-          "value": 14,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L12869",
-          "caveat": "all counts in this file are even — probably doubled upstream"
-        },
-        "denials": {
-          "value": 0,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L12869"
-        },
-        "approval_rate": {
-          "value": 100,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L12869"
-        },
-        "median_salary_offered": {
-          "value": 180000,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L12869",
-          "caveat": "company-wide, all sponsored roles — not this occupation"
-        },
-        "tier": {
-          "value": "Proven",
-          "why": "unambiguous title match, approvals 14 ≥ 10, rate 100.0% ≥ 90%",
-          "label": "your-input",
-          "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
-        },
-        "sponsorship_p": {
-          "value": 0.9,
-          "label": "your-input",
-          "derived_from": "persona tier_to_p mapping for tier Proven"
-        },
-        "latest_funding_date": {
-          "value": "2014-08-22",
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L12869"
-        },
-        "latest_funding_amount": {
-          "value": 75000000,
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L12869"
-        },
-        "latest_funding_stage": {
-          "value": "Series C",
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L12869",
-          "caveat": "stage is estimated by the upstream pipeline"
-        },
-        "recent_funding": {
-          "value": false,
-          "label": "your-input",
-          "derived_from": "latest_funding_date [record] within 24 months of the as-of date [your-input]"
-        },
-        "formd_sample": {
-          "value": "not in shipped sample",
-          "label": "record",
-          "note": "absence from 200 sampled filings is not evidence of no funding"
-        },
-        "website": {
-          "value": "iexgroup.com",
-          "label": "record",
-          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L12869",
-          "caveat": "domain guessed from the company name by the upstream pipeline — not a verified careers site"
-        }
-      },
-      "liveness": {
-        "status": "scored",
-        "factor": 1,
-        "checked_on": "2026-10-01",
-        "age_days": 0,
-        "method": "scripts/ats/scan.mjs --dry-run, greenhouse",
-        "result": "matching-open",
-        "evidence": "course/2026fa/submissions/contactshyam14-code/evidence/scan-dry-run-2026-10-01.txt",
-        "board_url": "https://job-boards.greenhouse.io/iex",
-        "board_identity": "confirmed: Greenhouse board name \"IEX Group\"",
-        "matching_postings": [
-          {
-            "title": "Project Manager",
-            "location": "New York",
-            "url": null
-          }
-        ],
-        "observed_by": "script",
-        "label": "record",
-        "notes": []
-      },
-      "identity_check_required": false,
-      "shares_record_with": [],
-      "timeline_path": "apply",
-      "scorer": {
-        "recommendation": "Apply",
-        "machine_recommendation": "Apply",
-        "composite": 0.315,
-        "reason": "composite 0.315 ≥ 0.3, gates healthy",
-        "arithmetic": "(0.9·0.35) × 1 × 1 = 0.315"
-      },
-      "bucket": "apply"
-    },
     {
       "role_id": "nt-centificglobalsolutions-l5238",
       "company": "CENTIFIC GLOBAL SOLUTIONS INC",
@@ -1038,20 +439,7 @@
       },
       "liveness": {
         "status": "hold",
-        "reason": "result \"unchecked\" is not a usable liveness result (unchecked or unknown)",
-        "checked_on": "2026-10-01",
-        "age_days": 0,
-        "method": "scripts/ats/scan.mjs --dry-run, greenhouse (deliberately unconfirmed slug)",
-        "result": "unchecked",
-        "evidence": "course/2026fa/submissions/contactshyam14-code/evidence/scan-dry-run-2026-10-01.txt",
-        "board_url": "https://job-boards.greenhouse.io/zeromotorcycles",
-        "board_identity": "unconfirmed",
-        "matching_postings": [],
-        "observed_by": "script",
-        "label": "model-judgment",
-        "notes": [
-          "board identity unconfirmed (the ATS returns no board name) — liveness is a model-judgment until a person confirms the board"
-        ]
+        "reason": "no liveness observation"
       },
       "identity_check_required": false,
       "shares_record_with": [],
@@ -1248,6 +636,208 @@
           "value": null,
           "label": "record",
           "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L14482",
+          "caveat": "domain guessed from the company name by the upstream pipeline — not a verified careers site"
+        }
+      },
+      "liveness": {
+        "status": "hold",
+        "reason": "no liveness observation"
+      },
+      "identity_check_required": false,
+      "shares_record_with": [],
+      "bucket": "check-liveness"
+    },
+    {
+      "role_id": "nt-genies-l10901",
+      "company": "GENIES INC",
+      "evidence": {
+        "matched_titles": {
+          "value": [
+            "Project Manager"
+          ],
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L10901"
+        },
+        "title_matches": [
+          {
+            "title": "Project Manager",
+            "soc": "13-1082",
+            "phrase": "project manager",
+            "ambiguous": false,
+            "vocabulary": "persona keyword [your-input]"
+          }
+        ],
+        "soc": {
+          "value": [
+            "13-1082"
+          ],
+          "label": "your-input",
+          "derived_from": "sponsored titles [record] matched against persona keywords [your-input] and BLS/O*NET titles [record]; the table records titles, not SOC codes"
+        },
+        "approvals": {
+          "value": 22,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L10901",
+          "caveat": "all counts in this file are even — probably doubled upstream"
+        },
+        "denials": {
+          "value": 0,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L10901"
+        },
+        "approval_rate": {
+          "value": 100,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L10901"
+        },
+        "median_salary_offered": {
+          "value": 95000,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L10901",
+          "caveat": "company-wide, all sponsored roles — not this occupation"
+        },
+        "tier": {
+          "value": "Proven",
+          "why": "unambiguous title match, approvals 22 ≥ 10, rate 100.0% ≥ 90%",
+          "label": "your-input",
+          "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
+        },
+        "sponsorship_p": {
+          "value": 0.9,
+          "label": "your-input",
+          "derived_from": "persona tier_to_p mapping for tier Proven"
+        },
+        "latest_funding_date": {
+          "value": "2021-04-16",
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L10901"
+        },
+        "latest_funding_amount": {
+          "value": 65000000,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L10901"
+        },
+        "latest_funding_stage": {
+          "value": "Series C",
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L10901",
+          "caveat": "stage is estimated by the upstream pipeline"
+        },
+        "recent_funding": {
+          "value": false,
+          "label": "your-input",
+          "derived_from": "latest_funding_date [record] within 24 months of the as-of date [your-input]"
+        },
+        "formd_sample": {
+          "value": "not in shipped sample",
+          "label": "record",
+          "note": "absence from 200 sampled filings is not evidence of no funding"
+        },
+        "website": {
+          "value": "genies.com",
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L10901",
+          "caveat": "domain guessed from the company name by the upstream pipeline — not a verified careers site"
+        }
+      },
+      "liveness": {
+        "status": "hold",
+        "reason": "no liveness observation"
+      },
+      "identity_check_required": false,
+      "shares_record_with": [],
+      "bucket": "check-liveness"
+    },
+    {
+      "role_id": "nt-unqork-l28039",
+      "company": "UNQORK INC",
+      "evidence": {
+        "matched_titles": {
+          "value": [
+            "Project Manager"
+          ],
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L28039"
+        },
+        "title_matches": [
+          {
+            "title": "Project Manager",
+            "soc": "13-1082",
+            "phrase": "project manager",
+            "ambiguous": false,
+            "vocabulary": "persona keyword [your-input]"
+          }
+        ],
+        "soc": {
+          "value": [
+            "13-1082"
+          ],
+          "label": "your-input",
+          "derived_from": "sponsored titles [record] matched against persona keywords [your-input] and BLS/O*NET titles [record]; the table records titles, not SOC codes"
+        },
+        "approvals": {
+          "value": 38,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L28039",
+          "caveat": "all counts in this file are even — probably doubled upstream"
+        },
+        "denials": {
+          "value": 0,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L28039"
+        },
+        "approval_rate": {
+          "value": 100,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L28039"
+        },
+        "median_salary_offered": {
+          "value": 120500,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L28039",
+          "caveat": "company-wide, all sponsored roles — not this occupation"
+        },
+        "tier": {
+          "value": "Proven",
+          "why": "unambiguous title match, approvals 38 ≥ 10, rate 100.0% ≥ 90%",
+          "label": "your-input",
+          "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
+        },
+        "sponsorship_p": {
+          "value": 0.9,
+          "label": "your-input",
+          "derived_from": "persona tier_to_p mapping for tier Proven"
+        },
+        "latest_funding_date": {
+          "value": "2020-09-18",
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L28039"
+        },
+        "latest_funding_amount": {
+          "value": 258083770,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L28039"
+        },
+        "latest_funding_stage": {
+          "value": "Series D+",
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L28039",
+          "caveat": "stage is estimated by the upstream pipeline"
+        },
+        "recent_funding": {
+          "value": false,
+          "label": "your-input",
+          "derived_from": "latest_funding_date [record] within 24 months of the as-of date [your-input]"
+        },
+        "formd_sample": {
+          "value": "not in shipped sample",
+          "label": "record",
+          "note": "absence from 200 sampled filings is not evidence of no funding"
+        },
+        "website": {
+          "value": "unqork.com",
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L28039",
           "caveat": "domain guessed from the company name by the upstream pipeline — not a verified careers site"
         }
       },
@@ -1873,6 +1463,107 @@
       "bucket": "check-liveness"
     },
     {
+      "role_id": "nt-iexgroup-l12869",
+      "company": "IEX GROUP INC",
+      "evidence": {
+        "matched_titles": {
+          "value": [
+            "Project Manager"
+          ],
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L12869"
+        },
+        "title_matches": [
+          {
+            "title": "Project Manager",
+            "soc": "13-1082",
+            "phrase": "project manager",
+            "ambiguous": false,
+            "vocabulary": "persona keyword [your-input]"
+          }
+        ],
+        "soc": {
+          "value": [
+            "13-1082"
+          ],
+          "label": "your-input",
+          "derived_from": "sponsored titles [record] matched against persona keywords [your-input] and BLS/O*NET titles [record]; the table records titles, not SOC codes"
+        },
+        "approvals": {
+          "value": 14,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L12869",
+          "caveat": "all counts in this file are even — probably doubled upstream"
+        },
+        "denials": {
+          "value": 0,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L12869"
+        },
+        "approval_rate": {
+          "value": 100,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L12869"
+        },
+        "median_salary_offered": {
+          "value": 180000,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L12869",
+          "caveat": "company-wide, all sponsored roles — not this occupation"
+        },
+        "tier": {
+          "value": "Proven",
+          "why": "unambiguous title match, approvals 14 ≥ 10, rate 100.0% ≥ 90%",
+          "label": "your-input",
+          "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
+        },
+        "sponsorship_p": {
+          "value": 0.9,
+          "label": "your-input",
+          "derived_from": "persona tier_to_p mapping for tier Proven"
+        },
+        "latest_funding_date": {
+          "value": "2014-08-22",
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L12869"
+        },
+        "latest_funding_amount": {
+          "value": 75000000,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L12869"
+        },
+        "latest_funding_stage": {
+          "value": "Series C",
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L12869",
+          "caveat": "stage is estimated by the upstream pipeline"
+        },
+        "recent_funding": {
+          "value": false,
+          "label": "your-input",
+          "derived_from": "latest_funding_date [record] within 24 months of the as-of date [your-input]"
+        },
+        "formd_sample": {
+          "value": "not in shipped sample",
+          "label": "record",
+          "note": "absence from 200 sampled filings is not evidence of no funding"
+        },
+        "website": {
+          "value": "iexgroup.com",
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L12869",
+          "caveat": "domain guessed from the company name by the upstream pipeline — not a verified careers site"
+        }
+      },
+      "liveness": {
+        "status": "hold",
+        "reason": "no liveness observation"
+      },
+      "identity_check_required": false,
+      "shares_record_with": [],
+      "bucket": "check-liveness"
+    },
+    {
       "role_id": "nt-irhythmtechnologies-l13661",
       "company": "IRHYTHM TECHNOLOGIES INC",
       "evidence": {
@@ -2277,6 +1968,107 @@
       "bucket": "check-liveness"
     },
     {
+      "role_id": "nt-sentibiosciences-l23704",
+      "company": "SENTI BIOSCIENCES INC",
+      "evidence": {
+        "matched_titles": {
+          "value": [
+            "R&D Project Manager"
+          ],
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L23704"
+        },
+        "title_matches": [
+          {
+            "title": "R&D Project Manager",
+            "soc": "13-1082",
+            "phrase": "project manager",
+            "ambiguous": false,
+            "vocabulary": "persona keyword [your-input]"
+          }
+        ],
+        "soc": {
+          "value": [
+            "13-1082"
+          ],
+          "label": "your-input",
+          "derived_from": "sponsored titles [record] matched against persona keywords [your-input] and BLS/O*NET titles [record]; the table records titles, not SOC codes"
+        },
+        "approvals": {
+          "value": 4,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L23704",
+          "caveat": "all counts in this file are even — probably doubled upstream"
+        },
+        "denials": {
+          "value": 0,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L23704"
+        },
+        "approval_rate": {
+          "value": 100,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L23704"
+        },
+        "median_salary_offered": {
+          "value": 128814,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L23704",
+          "caveat": "company-wide, all sponsored roles — not this occupation"
+        },
+        "tier": {
+          "value": "Likely",
+          "why": "approvals 4 or rate 100.0% below the Proven bar",
+          "label": "your-input",
+          "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
+        },
+        "sponsorship_p": {
+          "value": 0.6,
+          "label": "your-input",
+          "derived_from": "persona tier_to_p mapping for tier Likely"
+        },
+        "latest_funding_date": {
+          "value": "2024-12-09",
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L23704"
+        },
+        "latest_funding_amount": {
+          "value": 120594900,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L23704"
+        },
+        "latest_funding_stage": {
+          "value": "Series B",
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L23704",
+          "caveat": "stage is estimated by the upstream pipeline"
+        },
+        "recent_funding": {
+          "value": true,
+          "label": "your-input",
+          "derived_from": "latest_funding_date [record] within 24 months of the as-of date [your-input]"
+        },
+        "formd_sample": {
+          "value": "not in shipped sample",
+          "label": "record",
+          "note": "absence from 200 sampled filings is not evidence of no funding"
+        },
+        "website": {
+          "value": "sentibiosciences.com",
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L23704",
+          "caveat": "domain guessed from the company name by the upstream pipeline — not a verified careers site"
+        }
+      },
+      "liveness": {
+        "status": "hold",
+        "reason": "no liveness observation"
+      },
+      "identity_check_required": false,
+      "shares_record_with": [],
+      "bucket": "check-liveness"
+    },
+    {
       "role_id": "nt-neuro42-l17931",
       "company": "NEURO42 INC",
       "evidence": {
@@ -2428,7 +2220,7 @@
         },
         "tier": {
           "value": "Likely",
-          "why": "below the Proven bar: approvals 2 < 10, rate 50.0% < 90%",
+          "why": "approvals 2 or rate 50.0% below the Proven bar",
           "label": "your-input",
           "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
         },
@@ -2531,7 +2323,7 @@
         },
         "tier": {
           "value": "Likely",
-          "why": "below the Proven bar: approvals 2 < 10",
+          "why": "approvals 2 or rate 100.0% below the Proven bar",
           "label": "your-input",
           "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
         },
@@ -2632,7 +2424,7 @@
         },
         "tier": {
           "value": "Likely",
-          "why": "below the Proven bar: approvals 2 < 10, rate 50.0% < 90%",
+          "why": "approvals 2 or rate 50.0% below the Proven bar",
           "label": "your-input",
           "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
         },
@@ -2945,7 +2737,7 @@
         },
         "tier": {
           "value": "Likely",
-          "why": "below the Proven bar: approvals 2 < 10",
+          "why": "approvals 2 or rate 100.0% below the Proven bar",
           "label": "your-input",
           "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
         },
@@ -3048,7 +2840,7 @@
         },
         "tier": {
           "value": "Likely",
-          "why": "below the Proven bar: approvals 2 < 10",
+          "why": "approvals 2 or rate 100.0% below the Proven bar",
           "label": "your-input",
           "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
         },
@@ -3087,6 +2879,107 @@
           "value": null,
           "label": "record",
           "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L13494",
+          "caveat": "domain guessed from the company name by the upstream pipeline — not a verified careers site"
+        }
+      },
+      "liveness": {
+        "status": "hold",
+        "reason": "no liveness observation"
+      },
+      "identity_check_required": false,
+      "shares_record_with": [],
+      "bucket": "check-liveness"
+    },
+    {
+      "role_id": "nt-rondoenergy-l22817",
+      "company": "RONDO ENERGY INC",
+      "evidence": {
+        "matched_titles": {
+          "value": [
+            "Senior Construction Project Manager"
+          ],
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L22817"
+        },
+        "title_matches": [
+          {
+            "title": "Senior Construction Project Manager",
+            "soc": "13-1082",
+            "phrase": "project manager",
+            "ambiguous": false,
+            "vocabulary": "persona keyword [your-input]"
+          }
+        ],
+        "soc": {
+          "value": [
+            "13-1082"
+          ],
+          "label": "your-input",
+          "derived_from": "sponsored titles [record] matched against persona keywords [your-input] and BLS/O*NET titles [record]; the table records titles, not SOC codes"
+        },
+        "approvals": {
+          "value": 2,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L22817",
+          "caveat": "all counts in this file are even — probably doubled upstream"
+        },
+        "denials": {
+          "value": 0,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L22817"
+        },
+        "approval_rate": {
+          "value": 100,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L22817"
+        },
+        "median_salary_offered": {
+          "value": 160000,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L22817",
+          "caveat": "company-wide, all sponsored roles — not this occupation"
+        },
+        "tier": {
+          "value": "Likely",
+          "why": "approvals 2 or rate 100.0% below the Proven bar",
+          "label": "your-input",
+          "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
+        },
+        "sponsorship_p": {
+          "value": 0.6,
+          "label": "your-input",
+          "derived_from": "persona tier_to_p mapping for tier Likely"
+        },
+        "latest_funding_date": {
+          "value": "2022-01-04",
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L22817"
+        },
+        "latest_funding_amount": {
+          "value": 25116635,
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L22817"
+        },
+        "latest_funding_stage": {
+          "value": "Series B",
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L22817",
+          "caveat": "stage is estimated by the upstream pipeline"
+        },
+        "recent_funding": {
+          "value": false,
+          "label": "your-input",
+          "derived_from": "latest_funding_date [record] within 24 months of the as-of date [your-input]"
+        },
+        "formd_sample": {
+          "value": "not in shipped sample",
+          "label": "record",
+          "note": "absence from 200 sampled filings is not evidence of no funding"
+        },
+        "website": {
+          "value": "rondoenergy.com",
+          "label": "record",
+          "source": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv#L22817",
           "caveat": "domain guessed from the company name by the upstream pipeline — not a verified careers site"
         }
       },
@@ -3351,7 +3244,7 @@
         },
         "tier": {
           "value": "Likely",
-          "why": "below the Proven bar: approvals 2 < 10",
+          "why": "approvals 2 or rate 100.0% below the Proven bar",
           "label": "your-input",
           "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
         },
@@ -4058,7 +3951,7 @@
         },
         "tier": {
           "value": "Likely",
-          "why": "below the Proven bar: approvals 2 < 10",
+          "why": "approvals 2 or rate 100.0% below the Proven bar",
           "label": "your-input",
           "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
         },
@@ -4464,7 +4357,7 @@
         },
         "tier": {
           "value": "Likely",
-          "why": "below the Proven bar: approvals 4 < 10",
+          "why": "approvals 4 or rate 100.0% below the Proven bar",
           "label": "your-input",
           "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
         },
@@ -4565,7 +4458,7 @@
         },
         "tier": {
           "value": "Likely",
-          "why": "below the Proven bar: approvals 2 < 10",
+          "why": "approvals 2 or rate 100.0% below the Proven bar",
           "label": "your-input",
           "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
         },
@@ -4666,7 +4559,7 @@
         },
         "tier": {
           "value": "Likely",
-          "why": "below the Proven bar: approvals 8 < 10",
+          "why": "approvals 8 or rate 100.0% below the Proven bar",
           "label": "your-input",
           "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
         },
@@ -4870,7 +4763,7 @@
         },
         "tier": {
           "value": "Likely",
-          "why": "below the Proven bar: approvals 2 < 10",
+          "why": "approvals 2 or rate 100.0% below the Proven bar",
           "label": "your-input",
           "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
         },
@@ -5377,7 +5270,7 @@
         },
         "tier": {
           "value": "Likely",
-          "why": "below the Proven bar: approvals 2 < 10",
+          "why": "approvals 2 or rate 100.0% below the Proven bar",
           "label": "your-input",
           "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
         },
@@ -5680,7 +5573,7 @@
         },
         "tier": {
           "value": "Likely",
-          "why": "below the Proven bar: rate 85.7% < 90%",
+          "why": "approvals 12 or rate 85.7% below the Proven bar",
           "label": "your-input",
           "derived_from": "approvals, approval rate, title matches [record] + persona tier rule [your-input]"
         },

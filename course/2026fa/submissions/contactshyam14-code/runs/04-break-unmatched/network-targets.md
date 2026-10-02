@@ -4,7 +4,7 @@
 
 This report sorts companies with a public record of sponsoring visas for project-management or production-management job titles into four groups: talk to them first because nothing matching is open yet, apply because a matching job is open, check their job board before deciding, or skip. It is for a master's graduate in engineering management on a twelve-month work permit that ends on 2026-12-31.
 
-Of 57 matching companies: networking targets **4**; open matching job **1**; job board still to check **52**; skipped **0**. The decision tool skipped 4 of 5 scored roles (80%) — the networking targets are among those skips, because the tool skips any role with nothing open.
+Of 57 matching companies: networking targets **0**; open matching job **0**; job board still to check **57**; skipped **0**. The decision tool was not run, because no company had a usable job-board check yet.
 
 Read before acting: every sponsorship count in the source table is an even number, so the counts are probably doubled — read them as relative sizes, not exact numbers; 6 of these companies share an identical sponsorship record with a differently named company, so the record may not be theirs; none of the companies appears in the small sample of recent funding filings that ships with the repository — that is a gap in the sample, not evidence that they have no funding.
 
@@ -14,47 +14,42 @@ Nothing here is a decision. Two checks belong to a person: confirming with the s
 
 - **Visa-path sign-off — awaiting human sign-off.** OPT ends 2026-12-31 with no STEM extension claimed. Before tailoring any application, a DSO or immigration attorney must confirm a path past that date (e.g. cap-exempt employer, STEM eligibility of the degree, another status). This tool cannot answer that.
 - **Identity check — awaiting human check.** CONVEY INC (shares its record with COVEY INC); COVEY INC (shares its record with CONVEY INC); LYNDRA THERAPEUTICS INC (shares its record with LYRA THERAPEUTICS INC); LYRA THERAPEUTICS INC (shares its record with LYNDRA THERAPEUTICS INC); SALESFORCE COM INC (shares its record with SALESFORCECOM INC); SALESFORCECOM INC (shares its record with SALESFORCE COM INC).
-- **Liveness — 52 held.** Companies without a fresh job-board check are not scored; a missing check is never treated as "open" or "closed".
+- **Liveness — 57 held.** Companies without a fresh job-board check are not scored; a missing check is never treated as "open" or "closed".
 
 ## Network first — sponsors with nothing matching open
 
 Next action: ask for a 20-minute informational conversation about upcoming project/production roles and how they have handled H-1B sponsorship for them. This is networking time, not application time.
 
-| Company | Sponsored title(s) that matched [record] | SOC [your-input inference] | Tier [your-input rule] | Approvals / rate [record] | Latest funding [record] | Form D sample [record] | Liveness [label] | Flag |
-|---|---|---|---|---|---|---|---|---|
-| GENIES INC | Project Manager | 13-1082 | Proven | 22 / 100.0% | 2021-04-16 | not in shipped sample | no-matching-open [model-judgment] | ⚠ confirm board |
-| UNQORK INC | Project Manager | 13-1082 | Proven | 38 / 100.0% | 2020-09-18 | not in shipped sample | no-matching-open [record] |  |
-| SENTI BIOSCIENCES INC | R&D Project Manager | 13-1082 | Likely | 4 / 100.0% | 2024-12-09 (recent) | not in shipped sample | no-matching-open [model-judgment] | ⚠ confirm board |
-| RONDO ENERGY INC | Senior Construction Project Manager | 13-1082 | Likely | 2 / 100.0% | 2022-01-04 | not in shipped sample | no-matching-open [record] |  |
+_None in this run._
 
 ## Apply — a matching job is open
 
 Next action: tailor an application **after** the visa-path sign-off. Fit to the posting was not assessed by this tool.
 
-| Company | Sponsored title(s) that matched [record] | SOC [your-input inference] | Tier [your-input rule] | Approvals / rate [record] | Latest funding [record] | Form D sample [record] | Liveness [label] | Flag |
-|---|---|---|---|---|---|---|---|---|
-| IEX GROUP INC | Project Manager | 13-1082 | Proven | 14 / 100.0% | 2014-08-22 | not in shipped sample | matching-open [record] |  |
-
-- IEX GROUP INC: scorer says **Apply** — composite 0.315 ≥ 0.3, gates healthy; postings: Project Manager (New York)
+_None in this run._
 
 ## Check the job board first
 
 Next action: find the company's real careers page (the website column in the source table is a guessed domain), check for a matching open role, and record the result.
 
 - CENTIFIC GLOBAL SOLUTIONS INC — no liveness observation; tier Proven; titles: Information Technology Project Manager; no website listed
-- ZERO MOTORCYCLES INC — result "unchecked" is not a usable liveness result (unchecked or unknown); tier Proven; titles: Lean Manufacturing Manager; listed website: zeromotorcycles.com (guessed upstream)
+- ZERO MOTORCYCLES INC — no liveness observation; tier Proven; titles: Lean Manufacturing Manager; listed website: zeromotorcycles.com (guessed upstream)
 - SILA NANOTECHNOLOGIES INC — no liveness observation; tier Proven; titles: Technical Project Manager; listed website: silananotechnologies.com (guessed upstream)
 - KIZEN TECHNOLOGIES INC — no liveness observation; tier Proven; titles: IT PROJECT MANAGER; no website listed
+- GENIES INC — no liveness observation; tier Proven; titles: Project Manager; listed website: genies.com (guessed upstream)
+- UNQORK INC — no liveness observation; tier Proven; titles: Project Manager; listed website: unqork.com (guessed upstream)
 - FORGEROCK INC — no liveness observation; tier Proven; titles: Computer Systems Analyst (Senior IT Project Manager); listed website: forgerock.com (guessed upstream)
 - AURIS HEALTH INC — no liveness observation; tier Proven; titles: Senior Project Manager R&D Engineering; listed website: aurishealth.com (guessed upstream)
 - SPECTRAL MD INC — no liveness observation; tier Proven; titles: Project Management Specialist; listed website: spectralmd.com (guessed upstream)
 - VIRTUSA CORP — no liveness observation; tier Proven; titles: IT PROJECT MANAGER 3; listed website: virtusa.com (guessed upstream)
 - INTELLIA THERAPEUTICS INC — no liveness observation; tier Proven; titles: Senior Project Manager, CMC PMO; listed website: intelliatherapeutics.com (guessed upstream)
 - VISICON TECHNOLOGIES INC — no liveness observation; tier Proven; titles: IT Project Manager-II; no website listed
+- IEX GROUP INC — no liveness observation; tier Proven; titles: Project Manager; listed website: iexgroup.com (guessed upstream)
 - IRHYTHM TECHNOLOGIES INC — no liveness observation; tier Proven; titles: SR. TECHNICAL PROJECT MANAGER; no website listed
 - THERMO FISHER SCIENTIFIC INC — no liveness observation; tier Proven; titles: Sr R&D Project Manager; listed website: thermo-fisher-scientific.com (guessed upstream)
 - SPANIO INC — no liveness observation; tier Likely; titles: Engineering Program Manager; listed website: spanio.com (guessed upstream)
 - CABAN SYSTEMS HOLDING INC — no liveness observation; tier Likely; titles: Senior Software Technical Program Manager; no website listed
+- SENTI BIOSCIENCES INC — no liveness observation; tier Likely; titles: R&D Project Manager; listed website: sentibiosciences.com (guessed upstream)
 - NEURO42 INC — no liveness observation; tier Likely; titles: Senior Technical Program Manager; listed website: neuro42.com (guessed upstream)
 - LYNDRA THERAPEUTICS INC — no liveness observation; tier Likely; titles: Senior Manager/Associate Director, CMC Project Management; listed website: lyndratherapeutics.com (guessed upstream)
 - DAVID ZWIRNER DIGITAL INC — no liveness observation; tier Likely; titles: Project Manager; no website listed
@@ -63,6 +58,7 @@ Next action: find the company's real careers page (the website column in the sou
 - FORM ENERGY INC — no liveness observation; tier Likely; titles: Senior Program Manager; Staff Program Manager, Advanced Manufacturing; listed website: formenergy.com (guessed upstream)
 - COVEY INC — no liveness observation; tier Likely; titles: Project Manager; listed website: covey.com (guessed upstream)
 - INTERNET IDENTITY LABS INC — no liveness observation; tier Likely; titles: IT Project Manager; no website listed
+- RONDO ENERGY INC — no liveness observation; tier Likely; titles: Senior Construction Project Manager; listed website: rondoenergy.com (guessed upstream)
 - ZIMENO INC — no liveness observation; tier Likely; titles: MECHANICAL ENGINEER - TECHNICAL PROGRAM MANAGER; listed website: zimeno.com (guessed upstream)
 - ANTHEMIQ INC — no liveness observation; tier Likely; titles: Technical Program Manager; listed website: anthemiq.com (guessed upstream)
 - TORUS BIOSYSTEMS INC — no liveness observation; tier Likely; titles: Project Coordinator; no website listed
@@ -132,14 +128,15 @@ _None in this run._
 
 ## Run record
 
-- Tool: em-network-targets v0.1.0; as-of 2026-10-01 [your-input]; generated 2026-10-02T03:26:27.587Z
+- Tool: em-network-targets v0.1.0; as-of 2026-10-01 [your-input]; generated 2026-10-02T03:18:34.735Z
 - Persona: Shyam; OPT end 2026-12-31; not checked (persona gives no unemployment_days_used); days available 91; timeline factor apply 1 (min(1, 91 / 45)), network 1 (min(1, 91 / 75))
 - Input (persona): `scripts/contrib/2026fa/contactshyam14-code-em-network-targets/inputs/persona.shyam.json` sha256 `892c0fb8f1ab113f…`
-- Input (liveness observations): `scripts/contrib/2026fa/contactshyam14-code-em-network-targets/inputs/liveness.2026-10-01.json` sha256 `8c6a44522eba276e…`
+- Input (liveness observations): `scripts/contrib/2026fa/contactshyam14-code-em-network-targets/fixtures/break-liveness-unmatched.json` sha256 `245b9922d10bf6da…`
 - Input (80 Days company table): `data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv` sha256 `eccdee2addf472b1…`
 - Input (BLS/O*NET compact): `data/bls/compact/soc_occupation_compact.csv` sha256 `bac5acf77ca2d252…`
 - Input (SEC Form D sample): `data/sec/form-d/processed/sample/companies-sec-2025q2-d.sample.json` sha256 `6b24543c06287f96…`
 - Input (SEC Form D sample): `data/sec/form-d/processed/sample/companies-sec-2025q3-d.sample.json` sha256 `a1bdd1ebad49b636…`
 - Input (SEC Form D sample): `data/sec/form-d/processed/sample/companies-sec-2025q4-d.sample.json` sha256 `b92e0aa223c7c2d8…`
 - Input (SEC Form D sample): `data/sec/form-d/processed/sample/companies-sec-2026q1-d.sample.json` sha256 `f3fbe3f70970adf5…`
-- Scorer: `node scripts/score/role-scorer.mjs course/2026fa/submissions/contactshyam14-code/runs/03-scored/roles.json --out-dir course/2026fa/submissions/contactshyam14-code/runs/03-scored` → ✓ scored 5 roles → Apply 1 · Consider 0 · Skip 4 (skip 80%)
+- Scorer: not run — no candidate has a usable liveness observation, so there is nothing the scorer can decide
+- Liveness observations that matched no candidate: Quillfeather Assembly Works (not in the company CSV); 1LIFE HEALTHCARE INC (in the CSV but not a candidate (no H-1B record or no matching title))

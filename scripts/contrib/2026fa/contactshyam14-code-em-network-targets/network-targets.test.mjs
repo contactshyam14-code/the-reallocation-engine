@@ -96,6 +96,14 @@ test('record values are copied from the CSV, not computed or rounded', () => {
   assert.equal(c['BRAVO PROJECTS INC'].evidence.formd_sample.value, 'not in shipped sample');
 });
 
+test('a tier explanation names only the condition that actually failed', () => {
+  // Run 03's first report said "approvals 4 or rate 100.0% below the Proven bar" — the rate wasn't.
+  const c = byName(cli().log);
+  assert.equal(c['FOXTROT LABS INC'].evidence.tier.why, 'below the Proven bar: approvals 6 < 10');
+  assert.equal(c['DELTA DEVICES INC'].evidence.tier.why, 'below the Proven bar: approvals 4 < 10, rate 50.0% < 90%');
+  assert.equal(c['CHARLIE SOFTWARE INC'].evidence.tier.why, 'only an ambiguous title match (capped at Likely)');
+});
+
 test('liveness label follows who observed it and whether the board is confirmed', () => {
   const c = byName(cli().log);
   assert.equal(c['ALPHA PRODUCTION SYSTEMS INC'].liveness.label, 'record');

@@ -302,8 +302,13 @@ function tierFor(approvals, rate, matches, rules) {
   if (rate == null) return { tier: 'Possible', why: 'no approval rate on record' };
   if (solid && approvals != null && approvals >= rules.proven_min_approvals && rate >= rules.proven_min_rate)
     return { tier: 'Proven', why: `unambiguous title match, approvals ${approvals} ≥ ${rules.proven_min_approvals}, rate ${rate.toFixed(1)}% ≥ ${rules.proven_min_rate}%` };
-  if (rate >= rules.likely_min_rate)
-    return { tier: 'Likely', why: solid ? `approvals ${approvals} or rate ${rate.toFixed(1)}% below the Proven bar` : 'only an ambiguous title match (capped at Likely)' };
+  if (rate >= rules.likely_min_rate) {
+    if (!solid) return { tier: 'Likely', why: 'only an ambiguous title match (capped at Likely)' };
+    const short = [];
+    if (approvals == null || approvals < rules.proven_min_approvals) short.push(`approvals ${approvals ?? '—'} < ${rules.proven_min_approvals}`);
+    if (rate < rules.proven_min_rate) short.push(`rate ${rate.toFixed(1)}% < ${rules.proven_min_rate}%`);
+    return { tier: 'Likely', why: `below the Proven bar: ${short.join(', ')}` };
+  }
   return { tier: 'Possible', why: `approval rate ${rate.toFixed(1)}% < ${rules.likely_min_rate}%` };
 }
 
@@ -430,7 +435,7 @@ export function run(argv) {
   // out-dir guard: never write over a tracked repo file or outside my namespaces
   const outResolved = path.resolve(opt.outDir);
   if (!OUT_ROOTS.some((r) => inside(outResolved, r)))
-    throw new Stop('usage', `--out-dir ${opt.outDir} is outside this contribution's folders; refusing to write there`, 2);
+    throw new Stop('usage', `--out-dir ${rel(outResolved)} is outside this contribution's folders; refusing to write there`, 2);
 
   // G1 — every input validated before anything is written
   const asOfStr = args.asOf || today();
