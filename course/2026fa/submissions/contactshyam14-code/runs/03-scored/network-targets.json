@@ -6,7 +6,7 @@
       "value": "2026-10-01",
       "label": "your-input"
     },
-    "generated_at": "2026-10-02T03:26:27.587Z",
+    "generated_at": "2026-10-02T03:28:15.539Z",
     "inputs": [
       {
         "role": "persona",
@@ -175,7 +175,7 @@
       "denials_even": 1557,
       "label": "record",
       "all_even": true,
-      "meaning": "every approval and denial count is even; real counts would be about half odd, so the absolute counts are probably doubled upstream (the approval rate is unaffected). Counts are shown as stored, not halved."
+      "meaning": "Every approval and denial count is even; real counts would be about half odd, so the absolute counts are probably doubled upstream (the approval rate is unaffected). Counts are shown as stored, not halved."
     },
     "twins": {
       "groups": 42,

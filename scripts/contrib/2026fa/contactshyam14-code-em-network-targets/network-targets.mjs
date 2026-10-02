@@ -230,7 +230,7 @@ function dataChecks(companies) {
   };
   parity.all_even = h1b.length >= 20 && parity.approvals_odd === 0 && parity.denials_odd === 0;
   parity.meaning = parity.all_even
-    ? 'every approval and denial count is even; real counts would be about half odd, so the absolute counts are probably doubled upstream (the approval rate is unaffected). Counts are shown as stored, not halved.'
+    ? 'Every approval and denial count is even; real counts would be about half odd, so the absolute counts are probably doubled upstream (the approval rate is unaffected). Counts are shown as stored, not halved.'
     : 'no parity anomaly detected';
   const fp = new Map();
   for (const c of h1b) {

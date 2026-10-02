@@ -100,7 +100,7 @@ _None in this run._
 
 ## Data warnings
 
-- **Count parity:** 1557 of 1557 approval counts and 1557 of 1557 denial counts are even. every approval and denial count is even; real counts would be about half odd, so the absolute counts are probably doubled upstream (the approval rate is unaffected). Counts are shown as stored, not halved.
+- **Count parity:** 1557 of 1557 approval counts and 1557 of 1557 denial counts are even. Every approval and denial count is even; real counts would be about half odd, so the absolute counts are probably doubled upstream (the approval rate is unaffected). Counts are shown as stored, not halved.
 - **Shared records:** 42 groups covering 85 companies carry an identical sponsorship record (same approvals, denials, median salary and title list) under different names.
 - **Form D sample:** 200 filings across 4 files (the first 50 of each quarter); 0 of 57 candidates matched by exact normalized name. Absence from the sample is not evidence of no funding.
 - **Websites:** the source pipeline guesses domains from company names; a listed website is not a verified careers site.
@@ -132,7 +132,7 @@ _None in this run._
 
 ## Run record
 
-- Tool: em-network-targets v0.1.0; as-of 2026-10-01 [your-input]; generated 2026-10-02T03:26:27.587Z
+- Tool: em-network-targets v0.1.0; as-of 2026-10-01 [your-input]; generated 2026-10-02T03:28:15.539Z
 - Persona: Shyam; OPT end 2026-12-31; not checked (persona gives no unemployment_days_used); days available 91; timeline factor apply 1 (min(1, 91 / 45)), network 1 (min(1, 91 / 75))
 - Input (persona): `scripts/contrib/2026fa/contactshyam14-code-em-network-targets/inputs/persona.shyam.json` sha256 `892c0fb8f1ab113f…`
 - Input (liveness observations): `scripts/contrib/2026fa/contactshyam14-code-em-network-targets/inputs/liveness.2026-10-01.json` sha256 `8c6a44522eba276e…`
