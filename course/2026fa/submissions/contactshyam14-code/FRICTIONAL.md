@@ -47,6 +47,8 @@ Each entry: **tried → expected → happened → response → learned**, with a
     - The recipe's G4 gate test used a `grep` that could never match the bold run-log line. It was fixed and self-tested.
 15. **A number written from memory (Claude).** The first worked-run draft said run 02 had 18 Proven companies; the saved log says 15 (18 was run 01). → Corrected after re-reading every quoted count from the logs. *Trace:* WORKED-RUN §2.
 
+16. **Pasting the privacy scan re-created its finding (Claude).** TEST-REPORT and `evidence/pii-scan-after.txt` pasted the scan output verbatim, including the flagged email address from upstream's `package-lock.json`. The final branch-history scan then reported **2 findings in my own files**. Deleting them in a later commit wouldn't help, because CI scans the whole branch history. → Redacted the address with a visible note and amended that single local commit; nothing had been pushed. The branch-history scan was clean again. *Learned:* evidence about sensitive data must not contain the sensitive data. *Trace:* TEST-REPORT §Privacy scan; `evidence/pii-scan-after.txt` header note.
+
 ## Unresolved questions
 
 - Are the H-1B counts really doubled, and at which upstream step? This needs the USCIS export (recipe proposal 3).

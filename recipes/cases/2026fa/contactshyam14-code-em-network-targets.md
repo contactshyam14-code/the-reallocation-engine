@@ -1,8 +1,11 @@
 ---
 status: RUNNABLE-SAMPLE
 todos_open: 6
-last_gate: null  # Shyam fills after re-running and reading runs/03-scored/network-targets.md, e.g. "sample-run adequacy, 2026-10-0X, Shyam Gopalakrishnan, logs/runs/2026fa-contactshyam14-code-1.md"
-attestation: null  # set only at VERIFIED; this recipe has had no live gated run
+last_gate: null
+# last_gate: Shyam fills after re-running and reading runs/03-scored/network-targets.md, e.g.
+#   "sample-run adequacy, 2026-10-0X, Shyam Gopalakrishnan, logs/runs/2026fa-contactshyam14-code-1.md"
+attestation: null
+# attestation: set only at VERIFIED; this recipe has had no live gated run
 recipe_version: 0.1.0
 ---
 
