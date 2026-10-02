@@ -205,6 +205,39 @@ Full output: `evidence/failure-cases-2026-10-01.txt` (pasted in WORKED-RUN §5).
 
 (49 files and 28,694 added lines at `34b0c7a`, before this report was added. Most of the lines are the machine-readable run logs in `runs/`. The full `git diff --stat origin/main` goes in the PR body.)
 
+## What CI will show on the PR, and why
+
+Upstream's own CI on `main` already fails the **Contrib Gate** workflow, including at `015843d`, the commit this branch starts from (`gh run list` / `gh run view`, read on 2026-10-01):
+
+```text
+2026-09-23T20:03  015843d  verify: success
+2026-09-23T20:03  015843d  Contrib Gate: failure
+2026-09-19T19:52  e1dd0cb  verify: success
+2026-09-19T19:52  e1dd0cb  Contrib Gate: failure
+--- latest Contrib Gate run on main, per job:
+harness-regression: failure
+conformance: success
+doctor-and-pii: failure
+contrib-scope: skipped
+```
+
+Both failing jobs fail for reasons outside this contribution, reproduced locally:
+
+- **`harness-regression`** runs six harness scripts, four of which don't exist in the repository: `scripts/test/gate-behavior-harness.mjs`, `scripts/test/fuzz-invariants.mjs`, `scripts/gates/gate-behavior-harness.mjs`, `scripts/score/scorer-harness.mjs`. Each exits 1 here; the two that exist exit 0.
+- **`doctor-and-pii`** fails at its working-tree PII step on the upstream `package-lock.json` finding above. Because that step fails first, the job never reaches its **branch-history** PII step. That scan was run locally instead (clean; output above).
+
+**Expected on this PR:**
+
+| Check | Expected result |
+|---|---|
+| `verify` | pass |
+| conformance | pass |
+| `contrib-scope` | pass: every path is namespaced; no protected path touched |
+| `doctor-and-pii` | fail, as on `main` |
+| `harness-regression` | fail, as on `main` |
+
+`.github/` is a protected path for students, so the workflow isn't patched here.
+
 ## What the gates require a person to judge
 
 | Gate | What the person judges | State after this run |
