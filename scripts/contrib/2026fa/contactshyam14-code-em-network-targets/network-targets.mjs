@@ -359,6 +359,7 @@ function liveFor(company, observations, asOfMs, maxAge, used) {
   if (o.observed_by === 'script' && !o.evidence) { label = LABEL.input; notes.push('script observation with no evidence file — treated as your-input'); }
   // The scan is a record of a board; that the board is THIS company's is a separate claim.
   if (o.board_identity === 'unconfirmed') { label = weakest(label, LABEL.model); notes.push('board identity unconfirmed (the ATS returns no board name) — liveness is a model-judgment until a person confirms the board'); }
+  else if (/^person-confirmed\b/.test(o.board_identity || '')) { label = weakest(label, LABEL.input); notes.push(`board identity confirmed by a person (${o.board_identity}) — liveness carries that person's label`); }
   const base = { checked_on: o.checked_on, age_days: age, method: o.method || null, result: o.result, evidence: o.evidence || null, board_url: o.board_url || null, board_identity: o.board_identity || null, matching_postings: o.matching_postings || [], observed_by: o.observed_by, label, notes };
   if (age < 0) return { status: 'hold', reason: `observation dated after the as-of date (${o.checked_on})`, ...base };
   if (age > maxAge) return { status: 'hold', reason: `observation is ${age} days old (limit ${maxAge})`, ...base };

@@ -4,7 +4,7 @@
 
 This document records the prototype being run end to end on the repository's own data for one person's situation, with the real terminal output pasted in. Read it to see what the tool actually produced, which parts are checked records and which are the person's own rules or a model's judgment, and what went wrong along the way.
 
-It found 57 companies whose public sponsorship record includes a project- or production-management title. One has a matching job open now (IEX Group, a project-manager role in New York). Four are networking targets: Unqork and Rondo Energy on a confirmed board check, plus Genies and Senti Biosciences whose job boards still need a person to confirm they are really the company's. The other 52 still need their boards checked, including both production-management sponsors. The source table has two problems no existing audit reports, and several things broke during the build and were fixed. One correction came from Shyam after these runs: the date first given as the work permit's end (December 2026) is its start. Run 05 repeats the scored run with the corrected dates, and every company lands in the same group.
+It found 57 companies whose public sponsorship record includes a project- or production-management title. One has a matching job open now (IEX Group, a project-manager role in New York). Four are networking targets: Unqork and Rondo Energy on a confirmed board check, plus Genies and Senti Biosciences, whose job boards Shyam confirmed by eye on 2026-10-02. The other 52 still need their boards checked, including both production-management sponsors. The source table has two problems no existing audit reports, and several things broke during the build and were fixed. One correction came from Shyam after these runs: the date first given as the work permit's end (December 2026) is its start. Run 05 repeats the scored run with the corrected dates, and every company lands in the same group. Shyam then re-ran the tests and the tool himself, spot-checked one company against the raw data, confirmed three job boards, and signed off the sample run (§8).
 
 ## Run record
 
@@ -279,6 +279,40 @@ output dir exists afterwards: no
 
 The CSV cross-check on run 05: 30 of 30 values match (`evidence/cross-check-2026-10-02.txt`).
 
+### 8. Shyam's own check and sign-off (run 06), then run 07
+
+On 2026-10-02 Shyam ran the checks himself, in his own terminal:
+- **Tests:** 20 of 20 passed at the time (`c0bceb8`).
+- **The tool, into his own folder:** `--as-of 2026-10-02 --liveness …/inputs/liveness.2026-10-01.json --out-dir …/runs/06-shyam-check`. It reported the same 57 candidates and the same 4 · 1 · 52 · 0 split.
+- **The report:** he read his run's report (the dates, the counts, and the three warnings).
+- **Spot-check:** he printed IEX Group's raw-data line (`2014-08-22 | 14.0 | 0.0 | 100.0 | 180000.0 | ['Project Manager']`) and matched it against the report's row.
+- **Job boards:** he opened the IEX, Genies and Senti boards in his browser. The IEX "Project Manager" job is listed, and the Genies and Senti boards belong to those companies.
+
+He signed off the sample run ("sign"), and his board confirmations went into `inputs/liveness.2026-10-02.json`. Run 07 uses that file:
+
+```text
+$ node scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.mjs --as-of 2026-10-02 --liveness scripts/contrib/2026fa/contactshyam14-code-em-network-targets/inputs/liveness.2026-10-02.json --out-dir course/2026fa/submissions/contactshyam14-code/runs/07-shyam-confirmed
+✓ 57 candidates from 1557 H-1B rows (13-1082: 55, 11-3051: 2)
+  network 4 · apply 1 · check-liveness 52 · skip 0
+  scorer: ✓ scored 5 roles → Apply 1 · Consider 0 · Skip 4 (skip 80%)
+  OPT window: 2026-12-31 → 2027-12-30 (starts in 90 days); 180 days available; timeline factor apply 1, network 1
+  ! parity: all 1557 approval and denial counts are even — counts probably doubled upstream
+  ! identity check needed: CONVEY INC, COVEY INC, LYNDRA THERAPEUTICS INC, LYRA THERAPEUTICS INC, SALESFORCE COM INC, SALESFORCECOM INC
+  gate G4 visa-path: awaiting human sign-off
+  wrote course/2026fa/submissions/contactshyam14-code/runs/07-shyam-confirmed/network-targets.json + network-targets.md + roles.json + role-scores.json/.md
+```
+
+The networking table now reads:
+
+```text
+| GENIES INC | Project Manager | 13-1082 | Proven | 22 / 100.0% | 2021-04-16 | not in shipped sample | no-matching-open [your-input] |  |
+| UNQORK INC | Project Manager | 13-1082 | Proven | 38 / 100.0% | 2020-09-18 | not in shipped sample | no-matching-open [record] |  |
+| SENTI BIOSCIENCES INC | R&D Project Manager | 13-1082 | Likely | 4 / 100.0% | 2024-12-09 (recent) | not in shipped sample | no-matching-open [your-input] |  |
+| RONDO ENERGY INC | Senior Construction Project Manager | 13-1082 | Likely | 2 / 100.0% | 2022-01-04 | not in shipped sample | no-matching-open [record] |  |
+```
+
+Genies and Senti moved from model-judgment to **your-input**, a person's check, and the "confirm board" flags are gone. No company changed group or tier (checked by script against run 05). The visa-path gate (G4) is still unsigned: that is a question for the DSO, and the sign-off above covers the sample run, not the visa path.
+
 ## Verified vs. inferred — line by line
 
 **IEX GROUP INC (apply)**
@@ -305,7 +339,7 @@ The CSV cross-check on run 05: 30 of 30 values match (`evidence/cross-check-2026
 | Term | Value | Label | Why |
 |---|---|---|---|
 | Sponsored titles | Avatar Modeler; Machine Learning Engineer / AI Scientist; Project Manager; Senior Concept Artist | record | line 10901. "Project Manager" is one of four titles |
-| Liveness | 0: board fetched, no matching title | **model-judgment** | the scan is a record of the Ashby board `genies`. That this board is Genies Inc's is my guess, because Ashby returns no board name. A person must confirm it before outreach |
+| Liveness | 0: board fetched, no matching title | **model-judgment** | the scan is a record of the Ashby board `genies`. That this board is Genies Inc's was my guess, because Ashby returns no board name. **Shyam opened the board on 2026-10-02 and confirmed it is Genies'; in run 07 this reads your-input** |
 
 **The other three scored companies**
 
@@ -313,7 +347,7 @@ The CSV cross-check on run 05: 30 of 30 values match (`evidence/cross-check-2026
 |---|---|---|---|
 | UNQORK INC | network | record (Greenhouse board "Unqork") | "Project Manager" is one of five titles at a software company. The filed SOC may not be 13-1082 |
 | RONDO ENERGY INC | network | record (Greenhouse board "Rondo Energy") | Likely: only 2 approvals, so possibly 1. The title is construction project management |
-| SENTI BIOSCIENCES INC | network | model-judgment (Lever returns no board name; the board had 0 jobs) | an empty board may mean a hiring freeze; the networking value is uncertain |
+| SENTI BIOSCIENCES INC | network | model-judgment in runs 03/05 (Lever returns no board name; the board had 0 jobs); your-input in run 07 after Shyam confirmed the board | an empty board may mean a hiring freeze; the networking value is uncertain |
 
 No value in the run is labelled model-judgment except those two liveness readings. No language model was called by the prototype.
 
@@ -332,7 +366,7 @@ No value in the run is labelled model-judgment except those two liveness reading
    ```
 
 2. **Provenance of the table.** Its SHA-256 equals the one recorded in the repository's 2026-05-28 audit of the same file, so the counts here are the audited file's counts.
-3. **Tests.** 20 offline tests pass (`node --test …/network-targets.test.mjs`). One pins the scorer's missing-gate default.
+3. **Tests.** 21 offline tests pass (`node --test …/network-targets.test.mjs`). One pins the scorer's missing-gate default.
 4. **Deliberate breaks (mutations), run against the 16-test suite of the time** (`evidence/mutation-tests-2026-10-01.txt`). Each one was caught:
    - M1, treat a missing check as open: 3 tests failed.
    - M2, label the tier "record": 1 test failed.
@@ -369,12 +403,16 @@ No value in the run is labelled model-judgment except those two liveness reading
 ## Attestation
 
 - Recipe: em-network-targets v0.1.0
-- By: **(Shyam Gopalakrishnan · date — to be filled by Shyam after re-running the rows below himself.)** Rows drafted by Claude from this session's runs.
+- By: **Shyam Gopalakrishnan · 2026-10-02.** He re-ran the tests and the tool himself (run 06), read the report, spot-checked IEX Group against the raw data, and confirmed three job boards in his browser (rows marked *Shyam*). The other rows were run by Claude (AI) in his session; Shyam reviewed them.
 
 ### Tested
 
 | Ran | Saw | Expected |
 |---|---|---|
+| *Shyam:* `node --test …/network-targets.test.mjs` (at `c0bceb8`) | 20 pass, 0 fail | all pass |
+| *Shyam:* the tool into `runs/06-shyam-check` | 57 candidates; network 4 · apply 1 · check-liveness 52 · skip 0 | the same as Claude's run 05 |
+| *Shyam:* IEX Group's raw-data line (last six columns) | `2014-08-22 \| 14.0 \| 0.0 \| 100.0 \| 180000.0 \| ['Project Manager']`, matching the report | match |
+| *Shyam:* opened the IEX, Genies and Senti job boards | the IEX "Project Manager" job is listed; the Genies and Senti boards are those companies' | scan confirmed; two boards confirmed |
 | `node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.test.mjs` | 20 pass, 0 fail | all pass, offline |
 | The Canvas ZIP, unzipped into the temp folder, tests run inside it | first ZIP: 18 of 19 — the output-folder guard let a repo under %TEMP% write into its own `data/examples/` | all pass from any location |
 | Run 05 command (§7) with the corrected OPT dates | same 57 candidates, same groups and tiers as run 03; OPT window 2026-12-31 → 2027-12-30, starts in 90 days; 180 days available | buckets unchanged; window described correctly |
@@ -398,7 +436,7 @@ No value in the run is labelled model-judgment except those two liveness reading
 - A live run with a person clearing every gate (that would be RUNNABLE-LIVE).
 - Boards on Workday, iCIMS, Taleo or SuccessFactors, which most large employers use. The scanner has no provider for them.
 - `scripts/ats/check-liveness.mjs` (Playwright) on a posting URL. Chromium is not installed, and no posting URL was captured.
-- That the Genies (Ashby) and Senti (Lever) boards belong to those companies.
+- That the Genies (Ashby) and Senti (Lever) boards belong to those companies *by any record*. Shyam confirmed them by eye on 2026-10-02, which is your-input.
 - Whether the IEX Group posting fits the persona, or whether IEX sponsors for it now.
 - The apparent doubling of counts against USCIS data.
 - A positive Form D match on real data (only the fixture has one).

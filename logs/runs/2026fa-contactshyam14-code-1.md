@@ -59,3 +59,21 @@ A record of the first sample runs of the "network, don't apply" recipe for an en
 - **Outputs:** none kept (the test run's scratch output was removed by the test itself)
 - **Result:** 18 of 19 tests. The output-folder guard allowed writing into the unzipped repository's `data/examples/`, because the whole repository sat under the OS temp dir. Fixed (namespaces only, inside the repository); regression test added; 20/20.
 - **Open issues:** none from this check. The rebuilt ZIP was re-tested; the result is in SUBMISSION.md.
+
+## 2026-10-02 — Shyam's review and sign-off
+
+- **Recipe:** manual (human review of the sample run)
+- **Inputs:** Shyam's own run (`course/2026fa/submissions/contactshyam14-code/runs/06-shyam-check/`); the raw CSV row for IEX GROUP INC; the IEX, Genies and Senti job boards, opened in his browser
+- **Outputs:**
+  - `scripts/contrib/2026fa/contactshyam14-code-em-network-targets/inputs/liveness.2026-10-02.json` (his board confirmations)
+  - `course/2026fa/submissions/contactshyam14-code/runs/07-shyam-confirmed/`
+- **Result:**
+  - Tests 20/20 at `c0bceb8` and the tool's 57 · 4 · 1 · 52 · 0 split, reproduced by Shyam himself.
+  - The IEX raw-data line matched the report.
+  - The IEX "Project Manager" job is still listed; the Genies and Senti boards belong to those companies.
+  - Run 07: same groups and tiers; Genies and Senti liveness is now your-input.
+- **Sample-run adequacy:** **signed by Shyam Gopalakrishnan, 2026-10-02** (sets the recipe's `last_gate`).
+- **G2 liveness:** Genies and Senti boards confirmed by Shyam (person), 2026-10-02.
+- **G4 visa-path:** not signed. Waiting for Shyam's DSO question.
+- **G5 identity:** unchanged. The six flagged candidates are held and not contacted.
+- **Open issues:** EAD end date still assumed (2027-12-30).

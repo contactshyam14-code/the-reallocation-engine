@@ -1,9 +1,9 @@
 ---
 status: RUNNABLE-SAMPLE
 todos_open: 6
-last_gate: null
-# last_gate: Shyam fills after re-running and reading runs/05-corrected-opt-dates/network-targets.md, e.g.
-#   "sample-run adequacy, 2026-10-0X, Shyam Gopalakrishnan, logs/runs/2026fa-contactshyam14-code-1.md"
+last_gate: "sample-run adequacy, 2026-10-02, Shyam Gopalakrishnan, logs/runs/2026fa-contactshyam14-code-1.md#2026-10-02--shyams-review-and-sign-off"
+# last_gate: Shyam re-ran the tests and the tool himself (runs/06-shyam-check), read the report,
+#   spot-checked IEX Group against the CSV, and confirmed three job boards; the earlier runs were by Claude.
 attestation: null
 # attestation: set only at VERIFIED; this recipe has had no live gated run
 recipe_version: 0.1.0
@@ -107,7 +107,7 @@ node scripts/conformance.mjs recipes/cases/2026fa scripts/contrib/2026fa/contact
 - **Which years the sponsorship covers**, and whether the company still sponsors — the record is a rear-view mirror.
 - **Funding outside 200 sampled filings**, or that a funding row in the table belongs to the named company (old "Series D+" rows on large public companies look like mis-attributed filings). Funding has no term in the scorer; it is only used to rank within a group.
 - **That a listed website is the company's careers site** — the upstream pipeline guesses domains from names.
-- **That an Ashby or Lever board belongs to the company** — those APIs return no board name.
+- **That an Ashby or Lever board belongs to the company** — those APIs return no board name. A person can confirm it; Shyam confirmed the Genies and Senti boards by eye on 2026-10-02, and their liveness is labelled your-input, not record.
 - **Anything about visa law.** The timeline factor is arithmetic on the person's own dates and assumptions. Which H-1B registration cycle(s) fall inside a 2026-12-31 → 2027-12-30 OPT window, what happens if a registration is not selected, and whether the degree is STEM-eligible are questions for the DSO or an attorney. (The 90-day unemployment allowance counting from the OPT start is the person's understanding, entered as input, not a rule this tool verifies.)
 - **Fit** between the person and a posting — not assessed; the scorer's fit vote is left empty, not guessed.
 
@@ -181,7 +181,7 @@ The 3 credibility hours are not produced by this recipe, but building and honest
 
 ## Verification checks
 
-- `node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.test.mjs` — 20 offline tests, including a characterization test of the scorer's missing-gate default.
+- `node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.test.mjs` — 21 offline tests, including a characterization test of the scorer's missing-gate default.
 - `node scripts/conformance.mjs recipes/cases/2026fa scripts/contrib/2026fa/contactshyam14-code-em-network-targets` and `npm run verify`.
 - Cross-check: `python course/2026fa/submissions/contactshyam14-code/evidence/cross-check.py data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv <out-dir>/network-targets.json` — every scored company's record values against the CSV with an independent parser.
 - Break attempts: the failure cases in `course/2026fa/submissions/contactshyam14-code/evidence/failure-cases-2026-10-01.txt`; the mutation runs in `…/evidence/mutation-tests-2026-10-01.txt`.
@@ -216,12 +216,12 @@ The 3 credibility hours are not produced by this recipe, but building and honest
 **Two qualifications, stated plainly.**
 
 - **Six TODO tags are open.** They are the proposed additions above, which the assignment requires to be tagged. The constitution says a recipe with open TODOs stays DRAFT. These six are proposals for other parts of the engine, not missing steps in this recipe, but a strict reader may hold this recipe at DRAFT. That reading is fair, and the claim should be read with it.
-- **Audits "read" means read by a person.** The claim stands only once `last_gate` names the human who read the sample report. It is null until that happens.
+- **Audits "read" means read by a person.** `last_gate` names him. On 2026-10-02 Shyam Gopalakrishnan re-ran the tests and the tool himself, read the report, spot-checked one record against the CSV, and confirmed three job boards.
 
 Not claimed: RUNNABLE-LIVE (no live run with every gate cleared by a human) or VERIFIED (no attestation bound to this version).
 
 ## Provenance
 
-- Drafted 2026-10-01 by Claude (AI) at Shyam's request, from the repository's data and the prototype's real runs. Reviewed by Shyam: *(date, after review)*.
+- Drafted 2026-10-01 by Claude (AI) at Shyam's request, from the repository's data and the prototype's real runs. Reviewed and signed (sample-run adequacy) by Shyam Gopalakrishnan on 2026-10-02.
 - Branch `contrib/2026fa-contactshyam14-code-em-network-targets`; change brief committed before any code (`f7d5cd2`); prototype `b30d64a`; hardening `a309e8c`; cross-check `f396526`; recipe and card `a0feadb`; OPT-start correction `987f927` (2026-10-02: December 2026 is the OPT start, not the end — runs 01–04 used the wrong date; run 05 is the corrected run, with identical buckets).
 - Data: the files in Source Inventory as shipped at upstream commit `015843d`; SHA-256s in each run's `network-targets.json`.

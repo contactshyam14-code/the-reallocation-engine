@@ -133,22 +133,23 @@ ok 3 - every evidence value carries one of the three labels
 ok 4 - record values are copied from the CSV, not computed or rounded
 ok 5 - a tier explanation names only the condition that actually failed
 ok 6 - liveness label follows who observed it and whether the board is confirmed
-ok 7 - F1: OPT end already past → exit 3, nothing written
-ok 8 - OPT not started yet: start reported, unemployment counted from the start, not from today
-ok 9 - an OPT start on or after the OPT end → exit 3, nothing written
-ok 10 - F2: SOC code with no row → exit 3, names the code, nothing written
-ok 11 - F3: liveness observations that match no candidate are reported, never invented
-ok 12 - F6: CSV missing a required column → exit 3, nothing written
-ok 13 - a stale or failed liveness check holds the company instead of closing it
-ok 14 - companies sharing an identical H-1B record are flagged for an identity check
-ok 15 - BLS vocabulary: primary O*NET row by default; "all" pulls in QA titles
-ok 16 - parity check is computed from the file, not hardcoded
-ok 17 - out-dir outside this contribution is refused, nothing written
-ok 18 - out-dir guard holds even when the repository itself sits inside the OS temp dir
-ok 19 - nothing checked yet → scorer is not run (no empty, NaN-rate report)
-ok 20 - upstream characterization: the scorer treats a MISSING liveness gate as open
-# tests 20
-# pass 20
+ok 7 - a person confirming a board makes its liveness your-input — not record, not model-judgment
+ok 8 - F1: OPT end already past → exit 3, nothing written
+ok 9 - OPT not started yet: start reported, unemployment counted from the start, not from today
+ok 10 - an OPT start on or after the OPT end → exit 3, nothing written
+ok 11 - F2: SOC code with no row → exit 3, names the code, nothing written
+ok 12 - F3: liveness observations that match no candidate are reported, never invented
+ok 13 - F6: CSV missing a required column → exit 3, nothing written
+ok 14 - a stale or failed liveness check holds the company instead of closing it
+ok 15 - companies sharing an identical H-1B record are flagged for an identity check
+ok 16 - BLS vocabulary: primary O*NET row by default; "all" pulls in QA titles
+ok 17 - parity check is computed from the file, not hardcoded
+ok 18 - out-dir outside this contribution is refused, nothing written
+ok 19 - out-dir guard holds even when the repository itself sits inside the OS temp dir
+ok 20 - nothing checked yet → scorer is not run (no empty, NaN-rate report)
+ok 21 - upstream characterization: the scorer treats a MISSING liveness gate as open
+# tests 21
+# pass 21
 # fail 0
 ```
 
@@ -262,7 +263,7 @@ Both failing jobs fail for reasons outside this contribution, reproduced locally
 
 | Gate | What the person judges | State after this run |
 |---|---|---|
-| G2 Liveness | Is each board really the company's? Is a "nothing matching" reading right? Two of four networking targets (Genies, Senti) rest on unconfirmed boards | open for Genies and Senti |
+| G2 Liveness | Is each board really the company's? Is a "nothing matching" reading right? Two of four networking targets (Genies, Senti) rested on boards no record could confirm | **confirmed by Shyam** on 2026-10-02 (opened both boards); their liveness is your-input in run 07 |
 | G4 Visa-path sign-off | With the DSO or an attorney: which H-1B registration cycle(s) fall inside an OPT of 2026-12-31 → 2027-12-30, what happens if one isn't selected, and does STEM eligibility, a cap-exempt employer or another status change that? No application is tailored until then | **not signed** |
 | G5 Identity | For each flagged candidate: which company owns the shared record? | none of the 5 scored companies is flagged; 6 held candidates are flagged |
-| Sample-run adequacy | Has a named person read the run-03 report and found it fit for purpose? This sets the recipe's `last_gate` | **not yet** (Shyam) |
+| Sample-run adequacy | Has a named person read the report and found it fit for purpose? This sets the recipe's `last_gate` | **signed**: Shyam Gopalakrishnan, 2026-10-02, after re-running the tests and the tool himself (`runs/06-shyam-check`), spot-checking IEX Group against the CSV, and confirming three boards |

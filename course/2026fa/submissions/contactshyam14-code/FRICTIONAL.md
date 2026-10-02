@@ -12,7 +12,7 @@ This is the honest log of building the "network, don't apply" recipe: what was a
 | Chose where the work lives (`JOB_Agent`) after the first folder failed | Cloned, installed, fixed the Windows environment outside the repo |
 | Asked Claude to draft the CHANGE-BRIEF predictions for him to edit | Drafted the brief and predictions, separating observations from predictions |
 | Asked "what to do" about the lifecycle status; approved the plan recommending RUNNABLE-SAMPLE with the conflict disclosed | Wrote the prototype, tests, fixtures, recipe, card, and write-ups; ran every command in this session |
-| *Still to do:* re-run the tests and command; read the run-03 report; sign `last_gate` and the attestation; edit the predictions; write the sections below; ask the DSO the G4 question | Will not push, fork, or open the PR without Shyam's explicit OK |
+| **Done 2026-10-02:** re-ran the tests and the tool himself (run 06); read the report; spot-checked IEX Group against the raw data; confirmed the IEX, Genies and Senti boards; signed the sample-run gate; approved his answers below. *Still to do:* ask the DSO the visa-path (G4) question; enter the EAD end date when known | Forked, pushed, and opened the PR after Shyam said "finish this task". Recorded his checks under his name only from his own chat answers |
 
 ## Log (2026-10-01, local time EDT)
 
@@ -74,20 +74,22 @@ Each entry: **tried → expected → happened → response → learned**, with a
 - Should funding become a scorer term, or stay outside the composite?
 - Is RUNNABLE-SAMPLE the right claim with six open proposal TODOs, or should a strict reading hold it at DRAFT?
 
-## Shyam — in your own words *(graded; Claude has not written these)*
+## Shyam — in my own words
 
-**What I checked myself when I re-ran it** (command, what I saw, whether it matched):
+*Drafted by Claude from Shyam's answers in chat, and approved by Shyam on 2026-10-02 ("use the draft"). For item 4 he chose two of the four options offered.*
 
-> *(write here)*
+**What I checked myself when I re-ran it:**
+
+> I ran the 20 tests myself and all passed. I ran the tool into my own folder and got the same result as Claude's run: 57 companies, 4 to network with, 1 to apply to, 52 still to check. I compared IEX Group's line in the raw data (`2014-08-22 | 14.0 | 0.0 | 100.0 | 180000.0 | ['Project Manager']`) with my report, and it matched. I opened the IEX, Genies and Senti job boards: the IEX Project Manager job is listed, and the Genies and Senti pages belong to those companies.
 
 **What I accepted from Claude's work, and why:**
 
-> *(write here)*
+> I accepted the 'network, don't apply' design and the rules in my persona file as drafted. I also accepted leaving the visa question to my DSO instead of letting the tool answer it.
 
-**What I changed or rejected** (predictions, rules in the persona, wording, the status claim):
+**What I changed or rejected:**
 
-> *(write here)*
+> I corrected my OPT date: December 2026 is when my OPT starts, not when it ends. The first version assumed I had about three months left. With the right date, the March H-1B registration falls inside my OPT window.
 
 **What I learned that I didn't expect:**
 
-> *(write here)*
+> The sponsorship counts in the data are all even, so they're probably doubled. And I need to network now, before the March registration.

@@ -39,7 +39,7 @@ Answer one question for an engineering-management graduate on 12-month OPT: *whi
 
 ## Annotated commands
 
-Tests first (offline, about 20 seconds; expect 20 passing):
+Tests first (offline, about 20 seconds; expect 21 passing):
 
 ```bash
 node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.test.mjs

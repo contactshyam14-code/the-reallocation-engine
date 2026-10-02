@@ -28,7 +28,7 @@ Defaults when a flag is left out: persona `inputs/persona.shyam.json`, liveness 
 node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.test.mjs
 ```
 
-20 tests. They run the CLI as a black box into a temp directory and read what it wrote. The scorer they exercise is the real `scripts/score/role-scorer.mjs`; nothing here re-implements it. One test pins upstream behaviour (a missing liveness gate is treated as open) so a change to the scorer is noticed.
+21 tests. They run the CLI as a black box into a temp directory and read what it wrote. The scorer they exercise is the real `scripts/score/role-scorer.mjs`; nothing here re-implements it. One test pins upstream behaviour (a missing liveness gate is treated as open) so a change to the scorer is noticed.
 
 ## What it reads
 
@@ -38,7 +38,7 @@ node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/networ
 | BLS/O*NET compact file | `data/bls/compact/soc_occupation_compact.csv` | record (titles used as match vocabulary) |
 | SEC Form D samples | `data/sec/form-d/processed/sample/*.sample.json` | record |
 | Persona: dates, targets, keywords, rules | `inputs/persona.shyam.json` | your-input |
-| Liveness observations | `inputs/liveness*.json` | record (repo script + saved output) · your-input (a person) · model-judgment (an AI, or an unconfirmed board) |
+| Liveness observations | `inputs/liveness*.json` | record (repo script + saved output) · your-input (a person) · your-input (a board a person confirmed) · model-judgment (an AI, or an unconfirmed board) |
 
 Board evidence for the worked run came from the repository's scanner, not from this tool:
 

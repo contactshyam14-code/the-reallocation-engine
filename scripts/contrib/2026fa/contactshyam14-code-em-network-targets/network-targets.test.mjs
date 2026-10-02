@@ -116,6 +116,14 @@ test('liveness label follows who observed it and whether the board is confirmed'
   assert.equal(byName(r.log)['ALPHA PRODUCTION SYSTEMS INC'].liveness.label, 'model-judgment');
 });
 
+test('a person confirming a board makes its liveness your-input — not record, not model-judgment', () => {
+  const p = path.join(tmp(), 'l.json');
+  fs.writeFileSync(p, JSON.stringify({ observations: [{ company: 'Alpha Production Systems', checked_on: '2026-10-01', observed_by: 'script', result: 'no-matching-open', evidence: 'x.txt', board_identity: 'person-confirmed: a named person opened the board' }] }));
+  const live = byName(cli(['--liveness', p]).log)['ALPHA PRODUCTION SYSTEMS INC'].liveness;
+  assert.equal(live.label, 'your-input');
+  assert.match(live.notes.join(' '), /confirmed by a person/);
+});
+
 test('F1: OPT end already past → exit 3, nothing written', () => {
   const r = cli(['--as-of', '2027-01-15']);
   assert.equal(r.status, 3);
