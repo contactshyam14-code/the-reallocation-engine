@@ -4,7 +4,7 @@
 
 This report sorts companies with a public record of sponsoring visas for project-management or production-management job titles into four groups: talk to them first because nothing matching is open yet, apply because a matching job is open, check their job board before deciding, or skip. It is for a master's graduate in engineering management on a twelve-month work permit that ends on 2026-12-31.
 
-Of 57 matching companies, **4** are networking targets, **1** have an open matching job, **52** still need their job board checked, and **0** are skipped. The decision tool skipped 4 of 5 scored roles (80%).
+Of 57 matching companies: networking targets **4**; open matching job **1**; job board still to check **52**; skipped **0**. The decision tool skipped 4 of 5 scored roles (80%) — the networking targets are among those skips, because the tool skips any role with nothing open.
 
 Read before acting: every sponsorship count in the source table is an even number, so the counts are probably doubled — read them as relative sizes, not exact numbers; 6 of these companies share an identical sponsorship record with a differently named company, so the record may not be theirs; none of the companies appears in the small sample of recent funding filings that ships with the repository — that is a gap in the sample, not evidence that they have no funding.
 
@@ -22,9 +22,9 @@ Next action: ask for a 20-minute informational conversation about upcoming proje
 
 | Company | Sponsored title(s) that matched [record] | SOC [your-input inference] | Tier [your-input rule] | Approvals / rate [record] | Latest funding [record] | Form D sample [record] | Liveness [label] | Flag |
 |---|---|---|---|---|---|---|---|---|
-| GENIES INC | Project Manager | 13-1082 | Proven | 22 / 100.0% | 2021-04-16 | not in shipped sample | no-matching-open [model-judgment] |  |
+| GENIES INC | Project Manager | 13-1082 | Proven | 22 / 100.0% | 2021-04-16 | not in shipped sample | no-matching-open [model-judgment] | ⚠ confirm board |
 | UNQORK INC | Project Manager | 13-1082 | Proven | 38 / 100.0% | 2020-09-18 | not in shipped sample | no-matching-open [record] |  |
-| SENTI BIOSCIENCES INC | R&D Project Manager | 13-1082 | Likely | 4 / 100.0% | 2024-12-09 (recent) | not in shipped sample | no-matching-open [model-judgment] |  |
+| SENTI BIOSCIENCES INC | R&D Project Manager | 13-1082 | Likely | 4 / 100.0% | 2024-12-09 (recent) | not in shipped sample | no-matching-open [model-judgment] | ⚠ confirm board |
 | RONDO ENERGY INC | Senior Construction Project Manager | 13-1082 | Likely | 2 / 100.0% | 2022-01-04 | not in shipped sample | no-matching-open [record] |  |
 
 ## Apply — a matching job is open
@@ -35,44 +35,44 @@ Next action: tailor an application **after** the visa-path sign-off. Fit to the 
 |---|---|---|---|---|---|---|---|---|
 | IEX GROUP INC | Project Manager | 13-1082 | Proven | 14 / 100.0% | 2014-08-22 | not in shipped sample | matching-open [record] |  |
 
-- IEX GROUP INC: scorer says **Apply** — composite 0.315 ≥ 0.3, gates healthy; postings: Project Manager <null>
+- IEX GROUP INC: scorer says **Apply** — composite 0.315 ≥ 0.3, gates healthy; postings: Project Manager (New York)
 
 ## Check the job board first
 
 Next action: find the company's real careers page (the website column in the source table is a guessed domain), check for a matching open role, and record the result.
 
-- CENTIFIC GLOBAL SOLUTIONS INC — no liveness observation; tier Proven; titles: Information Technology Project Manager; listed website: — (guessed upstream)
+- CENTIFIC GLOBAL SOLUTIONS INC — no liveness observation; tier Proven; titles: Information Technology Project Manager; no website listed
 - ZERO MOTORCYCLES INC — result "unchecked" is not a usable liveness result (unchecked or unknown); tier Proven; titles: Lean Manufacturing Manager; listed website: zeromotorcycles.com (guessed upstream)
 - SILA NANOTECHNOLOGIES INC — no liveness observation; tier Proven; titles: Technical Project Manager; listed website: silananotechnologies.com (guessed upstream)
-- KIZEN TECHNOLOGIES INC — no liveness observation; tier Proven; titles: IT PROJECT MANAGER; listed website: — (guessed upstream)
+- KIZEN TECHNOLOGIES INC — no liveness observation; tier Proven; titles: IT PROJECT MANAGER; no website listed
 - FORGEROCK INC — no liveness observation; tier Proven; titles: Computer Systems Analyst (Senior IT Project Manager); listed website: forgerock.com (guessed upstream)
 - AURIS HEALTH INC — no liveness observation; tier Proven; titles: Senior Project Manager R&D Engineering; listed website: aurishealth.com (guessed upstream)
 - SPECTRAL MD INC — no liveness observation; tier Proven; titles: Project Management Specialist; listed website: spectralmd.com (guessed upstream)
 - VIRTUSA CORP — no liveness observation; tier Proven; titles: IT PROJECT MANAGER 3; listed website: virtusa.com (guessed upstream)
 - INTELLIA THERAPEUTICS INC — no liveness observation; tier Proven; titles: Senior Project Manager, CMC PMO; listed website: intelliatherapeutics.com (guessed upstream)
-- VISICON TECHNOLOGIES INC — no liveness observation; tier Proven; titles: IT Project Manager-II; listed website: — (guessed upstream)
-- IRHYTHM TECHNOLOGIES INC — no liveness observation; tier Proven; titles: SR. TECHNICAL PROJECT MANAGER; listed website: — (guessed upstream)
+- VISICON TECHNOLOGIES INC — no liveness observation; tier Proven; titles: IT Project Manager-II; no website listed
+- IRHYTHM TECHNOLOGIES INC — no liveness observation; tier Proven; titles: SR. TECHNICAL PROJECT MANAGER; no website listed
 - THERMO FISHER SCIENTIFIC INC — no liveness observation; tier Proven; titles: Sr R&D Project Manager; listed website: thermo-fisher-scientific.com (guessed upstream)
 - SPANIO INC — no liveness observation; tier Likely; titles: Engineering Program Manager; listed website: spanio.com (guessed upstream)
-- CABAN SYSTEMS HOLDING INC — no liveness observation; tier Likely; titles: Senior Software Technical Program Manager; listed website: — (guessed upstream)
+- CABAN SYSTEMS HOLDING INC — no liveness observation; tier Likely; titles: Senior Software Technical Program Manager; no website listed
 - NEURO42 INC — no liveness observation; tier Likely; titles: Senior Technical Program Manager; listed website: neuro42.com (guessed upstream)
 - LYNDRA THERAPEUTICS INC — no liveness observation; tier Likely; titles: Senior Manager/Associate Director, CMC Project Management; listed website: lyndratherapeutics.com (guessed upstream)
-- DAVID ZWIRNER DIGITAL INC — no liveness observation; tier Likely; titles: Project Manager; listed website: — (guessed upstream)
+- DAVID ZWIRNER DIGITAL INC — no liveness observation; tier Likely; titles: Project Manager; no website listed
 - LYRA THERAPEUTICS INC — no liveness observation; tier Likely; titles: Senior Manager/Associate Director, CMC Project Management; listed website: lyratherapeutics.com (guessed upstream)
 - ARRIS COMPOSITES INC — no liveness observation; tier Likely; titles: Technical Program Manager; listed website: arriscomposites.com (guessed upstream)
 - FORM ENERGY INC — no liveness observation; tier Likely; titles: Senior Program Manager; Staff Program Manager, Advanced Manufacturing; listed website: formenergy.com (guessed upstream)
 - COVEY INC — no liveness observation; tier Likely; titles: Project Manager; listed website: covey.com (guessed upstream)
-- INTERNET IDENTITY LABS INC — no liveness observation; tier Likely; titles: IT Project Manager; listed website: — (guessed upstream)
+- INTERNET IDENTITY LABS INC — no liveness observation; tier Likely; titles: IT Project Manager; no website listed
 - ZIMENO INC — no liveness observation; tier Likely; titles: MECHANICAL ENGINEER - TECHNICAL PROGRAM MANAGER; listed website: zimeno.com (guessed upstream)
 - ANTHEMIQ INC — no liveness observation; tier Likely; titles: Technical Program Manager; listed website: anthemiq.com (guessed upstream)
-- TORUS BIOSYSTEMS INC — no liveness observation; tier Likely; titles: Project Coordinator; listed website: — (guessed upstream)
+- TORUS BIOSYSTEMS INC — no liveness observation; tier Likely; titles: Project Coordinator; no website listed
 - SOCIAL FINANCE INC — no liveness observation; tier Likely; titles: Senior Compliance Projects and Program Manager; listed website: social-finance.com (guessed upstream)
 - GRO INTELLIGENCE INC — no liveness observation; tier Likely; titles: Technical Program Manager; listed website: gro-intelligence.com (guessed upstream)
 - CHARGEPOINT INC — no liveness observation; tier Likely; titles: Senior Software Engineering Program Manager; listed website: chargepoint.com (guessed upstream)
 - MICROSOFT CORP — no liveness observation; tier Likely; titles: Technical Program Manager; listed website: microsoft.com (guessed upstream)
 - DOCUSIGN INC — no liveness observation; tier Likely; titles: Sr. Program Manager; listed website: docusign.com (guessed upstream)
-- CAPTION HEALTH INC — no liveness observation; tier Likely; titles: Project/Program Manager; listed website: — (guessed upstream)
-- CANOE SOFTWARE INC — no liveness observation; tier Likely; titles: Client Project Manager; listed website: — (guessed upstream)
+- CAPTION HEALTH INC — no liveness observation; tier Likely; titles: Project/Program Manager; no website listed
+- CANOE SOFTWARE INC — no liveness observation; tier Likely; titles: Client Project Manager; no website listed
 - NETLIFY INC — no liveness observation; tier Likely; titles: Manager, Program Management; listed website: netlify.com (guessed upstream)
 - CONVOY INC — no liveness observation; tier Likely; titles: Senior Program Manager, New Initiatives; listed website: convoy.com (guessed upstream)
 - SALESFORCECOM INC — no liveness observation; tier Likely; titles: Technical Program Manager; listed website: salesforcecom.com (guessed upstream)
@@ -83,9 +83,9 @@ Next action: find the company's real careers page (the website column in the sou
 - CONVEY INC — no liveness observation; tier Likely; titles: Project Manager; listed website: convey.com (guessed upstream)
 - MOTORQ INC — no liveness observation; tier Likely; titles: Technical Program Manager; listed website: motorq.com (guessed upstream)
 - LUCIDWORKS INC — no liveness observation; tier Likely; titles: Technical Program Manager; listed website: lucidworks.com (guessed upstream)
-- CELLULAR BIOMEDICINE GROUP INC — no liveness observation; tier Likely; titles: Regulatory and Program Management Scientist; listed website: — (guessed upstream)
-- ARGONAUT MANUFACTURING SERVICES INC — no liveness observation; tier Likely; titles: Program Manager; listed website: — (guessed upstream)
-- LABCONNECT HOLDINGS INC — no liveness observation; tier Likely; titles: Project Manager Specialist; listed website: — (guessed upstream)
+- CELLULAR BIOMEDICINE GROUP INC — no liveness observation; tier Likely; titles: Regulatory and Program Management Scientist; no website listed
+- ARGONAUT MANUFACTURING SERVICES INC — no liveness observation; tier Likely; titles: Program Manager; no website listed
+- LABCONNECT HOLDINGS INC — no liveness observation; tier Likely; titles: Project Manager Specialist; no website listed
 - DEMANDBASE INC — no liveness observation; tier Likely; titles: Staff Technical Program Manager; listed website: demandbase.io (guessed upstream)
 - AEVA INC — no liveness observation; tier Likely; titles: Staff Software Engineering Program Manager; listed website: aeva.com (guessed upstream)
 - SHIPBOB INC — no liveness observation; tier Likely; titles: Project Manager- Merchant Plus; listed website: shipbob.com (guessed upstream)
@@ -132,7 +132,7 @@ _None in this run._
 
 ## Run record
 
-- Tool: em-network-targets v0.1.0; as-of 2026-10-01 [your-input]; generated 2026-10-02T02:57:45.626Z
+- Tool: em-network-targets v0.1.0; as-of 2026-10-01 [your-input]; generated 2026-10-02T03:05:25.198Z
 - Persona: Shyam; OPT end 2026-12-31; not checked (persona gives no unemployment_days_used); days available 91; timeline factor apply 1 (min(1, 91 / 45)), network 1 (min(1, 91 / 75))
 - Input (persona): `scripts/contrib/2026fa/contactshyam14-code-em-network-targets/inputs/persona.shyam.json` sha256 `892c0fb8f1ab113f…`
 - Input (liveness observations): `scripts/contrib/2026fa/contactshyam14-code-em-network-targets/inputs/liveness.2026-10-01.json` sha256 `8c6a44522eba276e…`

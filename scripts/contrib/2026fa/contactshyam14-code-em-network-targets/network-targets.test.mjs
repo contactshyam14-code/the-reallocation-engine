@@ -184,11 +184,17 @@ test('parity check is computed from the file, not hardcoded', () => {
 });
 
 test('out-dir outside this contribution is refused, nothing written', () => {
-  const out = path.join(REPO, 'data', 'examples', 'nt-should-not-exist');
-  const r = cli([], { out });
-  assert.equal(r.status, 2);
-  assert.match(r.stderr, /outside this contribution's folders/);
-  assert.equal(fs.existsSync(out), false);
+  // Unique name + cleanup: a mutation run with the guard disabled once left files in
+  // data/examples/ and broke the next clean run (see evidence/mutation-tests-*.txt).
+  const out = path.join(REPO, 'data', 'examples', `nt-should-not-exist-${process.pid}-${Date.now()}`);
+  try {
+    const r = cli([], { out });
+    assert.equal(r.status, 2);
+    assert.match(r.stderr, /outside this contribution's folders/);
+    assert.equal(fs.existsSync(out), false);
+  } finally {
+    if (path.basename(out).startsWith('nt-should-not-exist-')) fs.rmSync(out, { recursive: true, force: true });
+  }
 });
 
 test('nothing checked yet → scorer is not run (no empty, NaN-rate report)', () => {
