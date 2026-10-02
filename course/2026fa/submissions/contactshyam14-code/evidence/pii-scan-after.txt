@@ -1,4 +1,4 @@
-# AFTER — branch at 34b0c7a
+# AFTER — branch at c84c764
 # NOTE: the flagged email address is redacted in this file ("<flagged address, redacted>") so that pasting the scan output does not re-create the finding in this branch. The commands were run with the literal address.
 $ node scripts/pii-scan.mjs
 pii-scan: 1 finding(s) — see DATA_CONTRACT.md §Zero-Conditions
@@ -14,5 +14,3 @@ pii-scan: clean ✓
 exit: 0
 $ git diff --quiet origin/main -- package-lock.json && echo "package-lock.json unchanged vs origin/main"
 package-lock.json unchanged vs origin/main
-$ git grep -c "<flagged address, redacted>" origin/main -- package-lock.json
-origin/main:package-lock.json:1

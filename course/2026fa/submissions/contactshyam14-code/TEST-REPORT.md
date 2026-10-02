@@ -20,7 +20,7 @@ This report records how the prototype was tested: the repository's own health ch
 
 ## Toolchain baseline — before and after
 
-**Before** = an untouched worktree of upstream `origin/main` (`015843d`), i.e. this branch before any change, same machine, same shims (`evidence/toolchain-before-*.txt`). **After** = this branch at `34b0c7a` (`evidence/toolchain-after-*.txt`).
+**Before** = an untouched worktree of upstream `origin/main` (`015843d`), i.e. this branch before any change, same machine, same shims (`evidence/toolchain-before-*.txt`). **After** = this branch at `c84c764` (`evidence/toolchain-after-*.txt`; first captured at `34b0c7a` and re-captured after the OPT-date correction, with the same results).
 
 `npm run doctor` — **identical before and after** (diff of the two outputs is empty apart from the header line). After:
 
@@ -89,7 +89,7 @@ Conformance on this contribution alone:
 
 ```text
 $ node scripts/conformance.mjs recipes/cases/2026fa scripts/contrib/2026fa/contactshyam14-code-em-network-targets course/2026fa/submissions/contactshyam14-code logs/runs/2026fa-contactshyam14-code-1.md
-conformance: 38 files (15 md · 18 json · 1 yaml · 3 js · 1 py)
+conformance: 43 files (17 md · 21 json · 1 yaml · 3 js · 1 py)
 ✓ all conform (machine half of P4). Adequacy is still the human gate.
 exit: 0
 ```
@@ -213,14 +213,14 @@ Full output: `evidence/failure-cases-2026-10-01.txt` (earlier persona; pasted in
 `git diff --name-only origin/main`, grouped. Every path is inside this contribution's assigned folders. No maintained file is modified, and `logs/RUN_LOG.md` is untouched.
 
 ```text
-     31 course/2026fa/submissions/contactshyam14-code
+     44 course/2026fa/submissions/contactshyam14-code
       1 logs/runs/2026fa-contactshyam14-code-1.md
       1 recipes/cases/2026fa/contactshyam14-code-em-network-targets.card.md
       1 recipes/cases/2026fa/contactshyam14-code-em-network-targets.md
      15 scripts/contrib/2026fa/contactshyam14-code-em-network-targets
 ```
 
-(49 files and 28,694 added lines at `34b0c7a`, before this report was added. Most of the lines are the machine-readable run logs in `runs/`. The full `git diff --stat origin/main` goes in the PR body.)
+(62 files and 35,934 added lines at `c84c764`; nothing deleted or modified upstream. Most of the lines are the machine-readable run logs in `runs/`. The full `git diff --stat origin/main` goes in the PR body.)
 
 ## What CI will show on the PR, and why
 
