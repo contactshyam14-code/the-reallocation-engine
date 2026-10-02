@@ -52,12 +52,15 @@ function realish(p) {
 const caseKey = (p) => (process.platform === 'win32' ? p.toLowerCase() : p);
 const inside = (p, root) => { const a = caseKey(realish(p)), r = caseKey(realish(root)); return a === r || a.startsWith(r + path.sep); };
 
-// Outputs may only land in my own namespaces (or the OS temp dir, for tests).
+// Outputs may only land in my own namespaces, or — for paths outside the repository —
+// the OS temp dir (tests). Inside the repo, the namespaces are the only allowance even
+// when the repo itself sits under the temp dir (an unzipped submission did, and the old
+// "anything under tmp" rule let it write into data/examples/).
 const OUT_ROOTS = [
   path.join(REPO, 'course/2026fa/submissions/contactshyam14-code'),
   HERE,
-  os.tmpdir(),
 ];
+const outAllowed = (p) => (inside(p, REPO) ? OUT_ROOTS.some((r) => inside(p, r)) : inside(p, os.tmpdir()));
 
 const LABEL = { record: 'record', input: 'your-input', model: 'model-judgment' };
 const STRENGTH = { record: 3, 'your-input': 2, 'model-judgment': 1 };
@@ -442,7 +445,7 @@ export function run(argv) {
 
   // out-dir guard: never write over a tracked repo file or outside my namespaces
   const outResolved = path.resolve(opt.outDir);
-  if (!OUT_ROOTS.some((r) => inside(outResolved, r)))
+  if (!outAllowed(outResolved))
     throw new Stop('usage', `--out-dir ${rel(outResolved)} is outside this contribution's folders; refusing to write there`, 2);
 
   // G1 — every input validated before anything is written

@@ -332,7 +332,7 @@ No value in the run is labelled model-judgment except those two liveness reading
    ```
 
 2. **Provenance of the table.** Its SHA-256 equals the one recorded in the repository's 2026-05-28 audit of the same file, so the counts here are the audited file's counts.
-3. **Tests.** 19 offline tests pass (`node --test …/network-targets.test.mjs`). One pins the scorer's missing-gate default.
+3. **Tests.** 20 offline tests pass (`node --test …/network-targets.test.mjs`). One pins the scorer's missing-gate default.
 4. **Deliberate breaks (mutations), run against the 16-test suite of the time** (`evidence/mutation-tests-2026-10-01.txt`). Each one was caught:
    - M1, treat a missing check as open: 3 tests failed.
    - M2, label the tier "record": 1 test failed.
@@ -375,7 +375,8 @@ No value in the run is labelled model-judgment except those two liveness reading
 
 | Ran | Saw | Expected |
 |---|---|---|
-| `node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.test.mjs` | 19 pass, 0 fail | all pass, offline |
+| `node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.test.mjs` | 20 pass, 0 fail | all pass, offline |
+| The Canvas ZIP, unzipped into the temp folder, tests run inside it | first ZIP: 18 of 19 — the output-folder guard let a repo under %TEMP% write into its own `data/examples/` | all pass from any location |
 | Run 05 command (§7) with the corrected OPT dates | same 57 candidates, same groups and tiers as run 03; OPT window 2026-12-31 → 2027-12-30, starts in 90 days; 180 days available | buckets unchanged; window described correctly |
 | Run 03 command (above) | 57 candidates; network 4, apply 1, check-liveness 52, skip 0; scorer Apply 1, Skip 4 (80%) | at least half skipped; no company scored without a liveness factor |
 | `scan.mjs --dry-run` on 6 boards | 28 jobs, 1 matching (IEX Group), 1 error (Zero Motorcycles 404) | errors reported, not hidden |
@@ -406,6 +407,8 @@ No value in the run is labelled model-judgment except those two liveness reading
 - Any visa-path question (gate G4). That is not something this tool can test.
 
 ### Broke during testing, fixed
+
+- **The output-folder guard failed when the repository itself was unzipped into the temp folder.** Inside the repo, only the namespaces are allowed now; a regression test fails on the old rule and passes on the new one.
 
 - **The persona's OPT date was the start, not the end** (Shyam's correction, 2026-10-02). The persona now has both dates, and the prototype counts the unemployment allowance from the start and describes the window. 2 tests added; run 05 and the failure cases were re-run (`987f927`).
 

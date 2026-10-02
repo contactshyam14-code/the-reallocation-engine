@@ -51,3 +51,11 @@ A record of the first sample runs of the "network, don't apply" recipe for an en
 - **G4 visa-path:** not signed. The question is now which H-1B registration falls inside the window, and what happens if it isn't selected.
 - **G5 identity:** unchanged from 2026-10-01.
 - **Sample-run adequacy:** not yet read by a human. *Shyam: replace with "read by Shyam Gopalakrishnan, YYYY-MM-DD".*
+
+## 2026-10-02 — Canvas ZIP check
+
+- **Recipe:** manual (submission check)
+- **Inputs:** `git archive` of PR head `5d9fca2`, unzipped into the Windows temp folder
+- **Outputs:** none kept (the test run's scratch output was removed by the test itself)
+- **Result:** 18 of 19 tests. The output-folder guard allowed writing into the unzipped repository's `data/examples/`, because the whole repository sat under the OS temp dir. Fixed (namespaces only, inside the repository); regression test added; 20/20.
+- **Open issues:** none from this check. The rebuilt ZIP was re-tested; the result is in SUBMISSION.md.

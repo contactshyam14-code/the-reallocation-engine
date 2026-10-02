@@ -181,7 +181,7 @@ The 3 credibility hours are not produced by this recipe, but building and honest
 
 ## Verification checks
 
-- `node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.test.mjs` — 19 offline tests, including a characterization test of the scorer's missing-gate default.
+- `node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.test.mjs` — 20 offline tests, including a characterization test of the scorer's missing-gate default.
 - `node scripts/conformance.mjs recipes/cases/2026fa scripts/contrib/2026fa/contactshyam14-code-em-network-targets` and `npm run verify`.
 - Cross-check: `python course/2026fa/submissions/contactshyam14-code/evidence/cross-check.py data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv <out-dir>/network-targets.json` — every scored company's record values against the CSV with an independent parser.
 - Break attempts: the failure cases in `course/2026fa/submissions/contactshyam14-code/evidence/failure-cases-2026-10-01.txt`; the mutation runs in `…/evidence/mutation-tests-2026-10-01.txt`.

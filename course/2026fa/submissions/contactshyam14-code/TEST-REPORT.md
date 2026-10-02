@@ -144,10 +144,11 @@ ok 14 - companies sharing an identical H-1B record are flagged for an identity c
 ok 15 - BLS vocabulary: primary O*NET row by default; "all" pulls in QA titles
 ok 16 - parity check is computed from the file, not hardcoded
 ok 17 - out-dir outside this contribution is refused, nothing written
-ok 18 - nothing checked yet → scorer is not run (no empty, NaN-rate report)
-ok 19 - upstream characterization: the scorer treats a MISSING liveness gate as open
-# tests 19
-# pass 19
+ok 18 - out-dir guard holds even when the repository itself sits inside the OS temp dir
+ok 19 - nothing checked yet → scorer is not run (no empty, NaN-rate report)
+ok 20 - upstream characterization: the scorer treats a MISSING liveness gate as open
+# tests 20
+# pass 20
 # fail 0
 ```
 
@@ -160,6 +161,8 @@ ok 19 - upstream characterization: the scorer treats a MISSING liveness gate as 
 | M3: disable the output-folder guard | 1 |
 
 With the guard off, M3 actually wrote five files into `data/examples/`, which broke the next clean run. Those files were moved out of the repository, and the test now uses a unique folder and cleans up after itself. Re-running M3 left no residue.
+
+**The Canvas ZIP, unzipped and tested — and what it caught.** The first ZIP (built with `git archive` from PR head `5d9fca2`) was unzipped into the Windows temp folder and the tests were run inside it: **18 of 19 passed**. The output-folder test failed. With the repository *inside* the temp folder, the guard's "anything under the OS temp dir is allowed" rule (meant for the tests' scratch folders) also allowed `data/examples/` inside that repository. A grader unzipping the submission under %TEMP% could have had tracked files overwritten. The hardened test cleaned up after itself, so nothing was left behind. **Fix:** inside the repository only the two namespaces are allowed, wherever the repository lives; the temp allowance applies only to paths outside it. A new test rebuilds the condition (a copy of the tool and scorer inside a fake repository under the temp folder). It fails on the old guard and passes on the new one, and the full suite is 20 of 20. The rebuilt ZIP was re-tested the same way (result in SUBMISSION.md, which travels with the ZIP).
 
 **Clean checkout:** a separate worktree of commit `a309e8c`, after `npm ci`. The tests passed, and the documented command reproduced run 03 except the `generated_at` timestamp.
 

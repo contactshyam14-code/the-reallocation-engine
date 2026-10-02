@@ -28,7 +28,7 @@ Defaults when a flag is left out: persona `inputs/persona.shyam.json`, liveness 
 node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.test.mjs
 ```
 
-19 tests. They run the CLI as a black box into a temp directory and read what it wrote. The scorer they exercise is the real `scripts/score/role-scorer.mjs`; nothing here re-implements it. One test pins upstream behaviour (a missing liveness gate is treated as open) so a change to the scorer is noticed.
+20 tests. They run the CLI as a black box into a temp directory and read what it wrote. The scorer they exercise is the real `scripts/score/role-scorer.mjs`; nothing here re-implements it. One test pins upstream behaviour (a missing liveness gate is treated as open) so a change to the scorer is noticed.
 
 ## What it reads
 
@@ -55,7 +55,7 @@ REALLOCATION_ENGINE_PORTALS=scripts/contrib/2026fa/contactshyam14-code-em-networ
 | `roles.json` | the scorer input this tool built |
 | `role-scores.json`, `role-scores.md` | written by the repository scorer (absent when nothing could be scored) |
 
-The output directory must be inside `course/2026fa/submissions/contactshyam14-code/`, this folder, or the OS temp directory; anything else is refused (exit 2) so no tracked file can be overwritten.
+The output directory must be inside `course/2026fa/submissions/contactshyam14-code/` or this folder; a path outside the repository may also be in the OS temp directory (that is what the tests use). Anything else is refused (exit 2), so no tracked file can be overwritten — including when the repository itself has been unzipped into the temp directory.
 
 ## Where it stops (exit 3, nothing written)
 

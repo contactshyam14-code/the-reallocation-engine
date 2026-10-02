@@ -228,6 +228,26 @@ test('out-dir outside this contribution is refused, nothing written', () => {
   }
 });
 
+test('out-dir guard holds even when the repository itself sits inside the OS temp dir', () => {
+  // The Canvas ZIP, unzipped under %TEMP%, once let output land in data/examples/: the old rule
+  // allowed anything under tmp. Rebuild that condition with a copy of the tool and the scorer.
+  const fake = path.join(tmp(), 'repo');
+  const here = path.join(fake, 'scripts/contrib/2026fa/contactshyam14-code-em-network-targets');
+  fs.mkdirSync(here, { recursive: true });
+  fs.mkdirSync(path.join(fake, 'scripts/score'), { recursive: true });
+  fs.copyFileSync(SCRIPT, path.join(here, 'network-targets.mjs'));
+  fs.copyFileSync(SCORER, path.join(fake, 'scripts/score/role-scorer.mjs'));
+  const run = (out) => spawnSync(process.execPath, [path.join(here, 'network-targets.mjs'),
+    '--persona', FX('persona.fixture.json'), '--liveness', FX('liveness.fixture.json'), '--csv', FX('companies.fixture.csv'),
+    '--soc-file', FX('soc.fixture.csv'), '--formd-dir', FX('formd'), '--as-of', '2026-10-01', '--out-dir', out], { cwd: fake, encoding: 'utf8' });
+  const tracked = path.join(fake, 'data', 'examples', 'should-refuse');
+  const r = run(tracked);
+  assert.equal(r.status, 2, r.stderr);
+  assert.equal(fs.existsSync(tracked), false);
+  const ns = path.join(fake, 'course/2026fa/submissions/contactshyam14-code/runs/t');
+  assert.equal(run(ns).status, 0, 'the namespace inside that repo is still allowed');
+});
+
 test('nothing checked yet → scorer is not run (no empty, NaN-rate report)', () => {
   const p = path.join(tmp(), 'empty.json');
   fs.writeFileSync(p, JSON.stringify({ observations: [] }));

@@ -57,6 +57,13 @@ Each entry: **tried → expected → happened → response → learned**, with a
 
     *Learned:* no test catches a wrong but plausible input. Ask for the exact source document (here, the EAD card), not a paraphrase. *Trace:* `987f927`, CHANGE-BRIEF Revision 1, WORKED-RUN §7.
 
+18. **The submission ZIP, tested as a grader would, failed a test (Claude).** The first Canvas ZIP was built from PR head `5d9fca2`, unzipped into the Windows temp folder, and the tests were run inside it: **18 of 19**. The output-folder guard allowed "anything under the OS temp dir" for the tests' scratch folders. With the whole repository under the temp folder, that rule also allowed its tracked `data/examples/`.
+    - → Inside the repository, only the namespaces are allowed now, wherever the repository lives.
+    - → A regression test rebuilds the condition. It fails on the old guard and passes on the new one (20/20).
+    - → The PR was updated and the ZIP rebuilt and re-tested.
+
+    *Learned:* "it passes on my machine" is not "it passes where it will be opened". Test the artefact you hand in, not the folder you built it in. *Trace:* the commit after `5d9fca2`, TEST-REPORT (Canvas ZIP paragraph), test 18.
+
 ## Unresolved questions
 
 - The exact OPT end date on the EAD card (2027-12-30 is assumed).

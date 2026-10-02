@@ -1,48 +1,25 @@
-# AFTER — branch at c84c764
+# AFTER — guard fix on top of 5d9fca2 (committed in the next commit)
 $ node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.test.mjs
-# Subtest: happy path: buckets come from the real scorer, not from this tool
 ok 1 - happy path: buckets come from the real scorer, not from this tool
-# Subtest: roles.json never omits a gate, and held companies are never scored
 ok 2 - roles.json never omits a gate, and held companies are never scored
-# Subtest: every evidence value carries one of the three labels
 ok 3 - every evidence value carries one of the three labels
-# Subtest: record values are copied from the CSV, not computed or rounded
 ok 4 - record values are copied from the CSV, not computed or rounded
-# Subtest: a tier explanation names only the condition that actually failed
 ok 5 - a tier explanation names only the condition that actually failed
-# Subtest: liveness label follows who observed it and whether the board is confirmed
 ok 6 - liveness label follows who observed it and whether the board is confirmed
-# Subtest: F1: OPT end already past → exit 3, nothing written
 ok 7 - F1: OPT end already past → exit 3, nothing written
-# Subtest: OPT not started yet: start reported, unemployment counted from the start, not from today
 ok 8 - OPT not started yet: start reported, unemployment counted from the start, not from today
-# Subtest: an OPT start on or after the OPT end → exit 3, nothing written
 ok 9 - an OPT start on or after the OPT end → exit 3, nothing written
-# Subtest: F2: SOC code with no row → exit 3, names the code, nothing written
 ok 10 - F2: SOC code with no row → exit 3, names the code, nothing written
-# Subtest: F3: liveness observations that match no candidate are reported, never invented
 ok 11 - F3: liveness observations that match no candidate are reported, never invented
-# Subtest: F6: CSV missing a required column → exit 3, nothing written
 ok 12 - F6: CSV missing a required column → exit 3, nothing written
-# Subtest: a stale or failed liveness check holds the company instead of closing it
 ok 13 - a stale or failed liveness check holds the company instead of closing it
-# Subtest: companies sharing an identical H-1B record are flagged for an identity check
 ok 14 - companies sharing an identical H-1B record are flagged for an identity check
-# Subtest: BLS vocabulary: primary O*NET row by default; "all" pulls in QA titles
 ok 15 - BLS vocabulary: primary O*NET row by default; "all" pulls in QA titles
-# Subtest: parity check is computed from the file, not hardcoded
 ok 16 - parity check is computed from the file, not hardcoded
-# Subtest: out-dir outside this contribution is refused, nothing written
 ok 17 - out-dir outside this contribution is refused, nothing written
-# Subtest: nothing checked yet → scorer is not run (no empty, NaN-rate report)
-ok 18 - nothing checked yet → scorer is not run (no empty, NaN-rate report)
-# Subtest: upstream characterization: the scorer treats a MISSING liveness gate as open
-ok 19 - upstream characterization: the scorer treats a MISSING liveness gate as open
-# tests 19
-# suites 0
-# pass 19
+ok 18 - out-dir guard holds even when the repository itself sits inside the OS temp dir
+ok 19 - nothing checked yet → scorer is not run (no empty, NaN-rate report)
+ok 20 - upstream characterization: the scorer treats a MISSING liveness gate as open
+# tests 20
+# pass 20
 # fail 0
-# cancelled 0
-# skipped 0
-# todo 0
-# duration_ms 26711.6097
