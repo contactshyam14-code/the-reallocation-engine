@@ -151,7 +151,9 @@ function loadPersona(file) {
   const need = (cond, msg) => { if (!cond) throw new Stop('G1', `persona: ${msg}`); };
   need(p.visa && typeof p.visa === 'object', 'missing "visa"');
   need(p.visa.needs_sponsorship === true || p.visa.needs_sponsorship === false, 'visa.needs_sponsorship must be true or false');
-  readDate(p.visa.opt_end_date, 'persona visa.opt_end_date');
+  const end = readDate(p.visa.opt_end_date, 'persona visa.opt_end_date');
+  if (p.visa.opt_start_date != null)
+    need(readDate(p.visa.opt_start_date, 'persona visa.opt_start_date') < end, `visa.opt_start_date ${p.visa.opt_start_date} must be before visa.opt_end_date ${p.visa.opt_end_date}`);
   need(p.visa.unemployment_days_used == null || (Number.isInteger(p.visa.unemployment_days_used) && p.visa.unemployment_days_used >= 0),
     'visa.unemployment_days_used must be null or a non-negative integer');
   need(Array.isArray(p.targets) && p.targets.length > 0, '"targets" must list at least one SOC code');
@@ -317,16 +319,22 @@ function timeline(persona, asOfMs) {
   const optEnd = readDate(v.opt_end_date, 'persona visa.opt_end_date');
   const daysToOptEnd = daysBetween(asOfMs, optEnd);
   if (daysToOptEnd <= 0) throw new Stop('G1', `OPT end date ${v.opt_end_date} is on or before the as-of date — refusing to score a window that has already closed`);
+  // Optional start date: before it, no job can begin and the unemployment clock isn't running yet.
+  const daysToStart = v.opt_start_date != null ? daysBetween(asOfMs, readDate(v.opt_start_date, 'persona visa.opt_start_date')) : null;
+  const started = daysToStart == null ? null : daysToStart <= 0;
   let deadlineDays = daysToOptEnd, unemployment = 'not checked (persona gives no unemployment_days_used)';
   if (v.unemployment_days_used != null) {
     const left = 90 - v.unemployment_days_used;
     if (left <= 0) throw new Stop('G1', `unemployment_days_used ${v.unemployment_days_used} leaves no days under the 90-day OPT unemployment limit — refusing to score`);
-    deadlineDays = Math.min(daysToOptEnd, left);
-    unemployment = `${left} unemployment days left (90 − ${v.unemployment_days_used})`;
+    deadlineDays = Math.min(daysToOptEnd, (started === false ? daysToStart : 0) + left);
+    unemployment = `${left} unemployment days left (90 − ${v.unemployment_days_used})${started === false ? `, counted from the OPT start ${v.opt_start_date}` : ''}`;
   }
   const factor = (lag) => Number(Math.min(1, Math.max(0, deadlineDays / lag)).toFixed(3));
   const lag = persona.rules.hiring_lag_days;
   return {
+    opt_start_date: { value: v.opt_start_date ?? null, label: LABEL.input },
+    opt_started: { value: started, label: LABEL.input, derived_from: 'opt_start_date and as-of date (both your-input); null when no start date is given' },
+    days_to_opt_start: { value: started === false ? daysToStart : null, label: LABEL.input },
     opt_end_date: { value: v.opt_end_date, label: LABEL.input },
     days_to_opt_end: { value: daysToOptEnd, label: LABEL.input, derived_from: 'opt_end_date and as-of date (both your-input)' },
     unemployment,
@@ -365,7 +373,7 @@ function renderReport(log) {
   const o = [];
   o.push(`# Network targets — ${log.persona.label_name} — ${log.run.as_of.value}`);
   o.push('\n## Executive summary\n');
-  o.push(`This report sorts companies with a public record of sponsoring visas for project-management or production-management job titles into four groups: talk to them first because nothing matching is open yet, apply because a matching job is open, check their job board before deciding, or skip. It is for a master's graduate in engineering management on a twelve-month work permit that ends on ${log.timeline.opt_end_date.value}.`);
+  o.push(`This report sorts companies with a public record of sponsoring visas for project-management or production-management job titles into four groups: talk to them first because nothing matching is open yet, apply because a matching job is open, check their job board before deciding, or skip. It is for a master's graduate in engineering management on a twelve-month work permit ${log.timeline.opt_start_date.value ? `that runs from ${log.timeline.opt_start_date.value} to ${log.timeline.opt_end_date.value}${log.timeline.opt_started.value === false ? ` and has not started yet, so no job can begin before ${log.timeline.opt_start_date.value}` : ''}` : `that ends on ${log.timeline.opt_end_date.value}`}.`);
   o.push(`\nOf ${log.counts.candidates} matching companies: networking targets **${net.length}**; open matching job **${app.length}**; job board still to check **${hold.length}**; skipped **${skip.length}**. ${log.scorer.ran ? `The decision tool skipped ${log.scorer.skip_summary} — the networking targets are among those skips, because the tool skips any role with nothing open.` : 'The decision tool was not run, because no company had a usable job-board check yet.'}`);
   const warn = [];
   if (log.data_checks.parity.all_even) warn.push('every sponsorship count in the source table is an even number, so the counts are probably doubled — read them as relative sizes, not exact numbers');
@@ -418,7 +426,7 @@ function renderReport(log) {
 
   o.push('\n## Run record\n');
   o.push(`- Tool: em-network-targets v${log._version}; as-of ${log.run.as_of.value} [${log.run.as_of.label}]; generated ${log.run.generated_at}`);
-  o.push(`- Persona: ${log.persona.label_name}; OPT end ${log.timeline.opt_end_date.value}; ${log.timeline.unemployment}; days available ${log.timeline.days_available.value}; timeline factor apply ${log.timeline.apply.factor} (${log.timeline.apply.formula}), network ${log.timeline.network.factor} (${log.timeline.network.formula})`);
+  o.push(`- Persona: ${log.persona.label_name}; OPT start ${log.timeline.opt_start_date.value ?? 'not given'}${log.timeline.opt_started.value === false ? ` (in ${log.timeline.days_to_opt_start.value} days)` : ''}; OPT end ${log.timeline.opt_end_date.value}; ${log.timeline.unemployment}; days available ${log.timeline.days_available.value}; timeline factor apply ${log.timeline.apply.factor} (${log.timeline.apply.formula}), network ${log.timeline.network.factor} (${log.timeline.network.formula})`);
   for (const i of log.run.inputs) o.push(`- Input (${i.role}): \`${i.path}\` sha256 \`${i.sha256.slice(0, 16)}…\``);
   o.push(`- Scorer: ${log.scorer.ran ? `\`${log.scorer.command}\` → ${esc(log.scorer.stdout.trim().split('\n')[0])}` : `not run — ${log.scorer.why_not}`}`);
   if (log.unmatched_liveness_observations.length)
@@ -586,7 +594,13 @@ export function run(argv) {
       G1_inputs: { status: 'pass' },
       G2_liveness: { held: candidates.filter((c) => c.bucket === 'check-liveness').length, scored: toScore.length },
       G3_timeline: { apply_factor: tl.apply.factor, network_factor: tl.network.factor, closed_below: gateZero ?? 'scorer not run' },
-      G4_visa_path: { status: 'awaiting human sign-off', question: `OPT ends ${persona.visa.opt_end_date} with no STEM extension claimed. Before tailoring any application, a DSO or immigration attorney must confirm a path past that date (e.g. cap-exempt employer, STEM eligibility of the degree, another status). This tool cannot answer that.`, signed_by: null },
+      G4_visa_path: {
+        status: 'awaiting human sign-off',
+        question: persona.visa.opt_start_date
+          ? `OPT runs ${persona.visa.opt_start_date} to ${persona.visa.opt_end_date} with no STEM extension claimed. Before tailoring any application, a DSO or immigration attorney must confirm which H-1B registration cycle(s) fall inside that window, what happens if a registration is not selected, and whether STEM eligibility of the degree, a cap-exempt employer, or another status changes that. This tool cannot answer that.`
+          : `OPT ends ${persona.visa.opt_end_date} with no STEM extension claimed. Before tailoring any application, a DSO or immigration attorney must confirm a path past that date (e.g. cap-exempt employer, STEM eligibility of the degree, another status). This tool cannot answer that.`,
+        signed_by: null,
+      },
       G5_identity: { status: candidates.some((c) => c.identity_check_required) ? 'awaiting human check' : 'nothing flagged', companies: candidates.filter((c) => c.identity_check_required).map((c) => ({ company: c.company, shares_with: c.shares_record_with })) },
     },
     data_checks: { parity: checks.parity, twins: checks.twins },
@@ -627,6 +641,8 @@ if (invokedDirectly) {
     console.log(`✓ ${log.counts.candidates} candidates from ${log.counts.companies_with_h1b} H-1B rows (${Object.entries(log.counts.by_soc).map(([k, v]) => `${k}: ${v}`).join(', ')})`);
     console.log(`  network ${c.network} · apply ${c.apply} · check-liveness ${c['check-liveness']} · skip ${c.skip}`);
     console.log(`  scorer: ${log.scorer.ran ? log.scorer.stdout.trim().split('\n')[0] : `not run — ${log.scorer.why_not}`}`);
+    const t = log.timeline;
+    console.log(`  OPT window: ${t.opt_start_date.value ?? '(start not given)'} → ${t.opt_end_date.value}${t.opt_started.value === false ? ` (starts in ${t.days_to_opt_start.value} days)` : ''}; ${t.days_available.value} days available; timeline factor apply ${t.apply.factor}, network ${t.network.factor}`);
     if (log.data_checks.parity.all_even) console.log(`  ! parity: all ${log.data_checks.parity.rows_with_h1b} approval and denial counts are even — counts probably doubled upstream`);
     if (log.gates.G5_identity.companies.length) console.log(`  ! identity check needed: ${log.gates.G5_identity.companies.map((x) => x.company).join(', ')}`);
     if (log.unmatched_liveness_observations.length) console.log(`  ! liveness observations with no candidate: ${log.unmatched_liveness_observations.map((u) => `${u.company} (${u.why})`).join('; ')}`);

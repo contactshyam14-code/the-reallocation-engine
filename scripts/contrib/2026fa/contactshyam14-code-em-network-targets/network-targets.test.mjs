@@ -124,6 +124,29 @@ test('F1: OPT end already past → exit 3, nothing written', () => {
   assert.equal(fs.existsSync(r.out), false);
 });
 
+test('OPT not started yet: start reported, unemployment counted from the start, not from today', () => {
+  // 2026-10-02 correction: December 2026 was the OPT START, not the end.
+  const persona = withPersona((p) => { p.visa.opt_start_date = '2026-12-31'; p.visa.opt_end_date = '2027-12-30'; p.visa.unemployment_days_used = 0; });
+  const r = cli(['--persona', persona]);
+  assert.equal(r.status, 0, r.stderr);
+  const t = r.log.timeline;
+  assert.equal(t.opt_started.value, false);
+  assert.equal(t.days_to_opt_start.value, 91);   // 2026-10-01 → 2026-12-31
+  assert.equal(t.days_to_opt_end.value, 455);    // 2026-10-01 → 2027-12-30
+  assert.equal(t.days_available.value, 181);     // 91 days until start + 90 unemployment days
+  assert.match(t.unemployment, /counted from the OPT start 2026-12-31/);
+  assert.match(fs.readFileSync(path.join(r.out, 'network-targets.md'), 'utf8'), /has not started yet, so no job can begin before 2026-12-31/);
+  assert.match(r.log.gates.G4_visa_path.question, /OPT runs 2026-12-31 to 2027-12-30/);
+});
+
+test('an OPT start on or after the OPT end → exit 3, nothing written', () => {
+  const persona = withPersona((p) => { p.visa.opt_start_date = '2028-01-01'; p.visa.opt_end_date = '2027-12-30'; });
+  const r = cli(['--persona', persona]);
+  assert.equal(r.status, 3);
+  assert.match(r.stderr, /opt_start_date 2028-01-01 must be before visa\.opt_end_date 2027-12-30/);
+  assert.equal(fs.existsSync(r.out), false);
+});
+
 test('F2: SOC code with no row → exit 3, names the code, nothing written', () => {
   const persona = withPersona((p) => { p.targets[0].soc = '13-1028'; });
   const r = cli(['--persona', persona]);

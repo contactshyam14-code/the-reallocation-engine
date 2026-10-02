@@ -6,10 +6,13 @@
   "email": "shyam@example.com",
   "degree": "MS Engineering Management",
   "visa": {
-    "status": "F-1 post-completion OPT (12-month)",
+    "status": "F-1; 12-month post-completion OPT not started yet",
     "stem_extension": false,
-    "opt_end_date": "2026-12-31",
-    "unemployment_days_used": null,
+    "opt_start_date": "2026-12-31",
+    "opt_end_date": "2027-12-30",
+    "_dates_note": "Start date from Shyam (2026-10-02 correction: December 2026 is the OPT START, not the end). End date is an assumption: start + 12 months - 1 day; replace it with the 'Card Expires' date on the EAD.",
+    "unemployment_days_used": 0,
+    "_unemployment_note": "0 because OPT has not started; as understood, the 90-day unemployment allowance counts from the OPT start date (confirm with the DSO).",
     "needs_sponsorship": true
   },
   "targets": [
