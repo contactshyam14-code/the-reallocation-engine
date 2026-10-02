@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-This is the honest log of building the "network, don't apply" recipe: what was attempted, what was expected, what actually happened, and what changed in response, with every entry marked by who acted — Shyam (the student) or Claude (the AI assistant doing most of the hands-on work at Shyam's request). It is worth reading because several of the most useful findings came from things going wrong: the setup made the repository look broken when it wasn't, the first version of the tool counted software-testing jobs as production management, and a test of the tests leaked files into the repository. The sections marked for Shyam are his to write; Claude has not filled them in.
+This is the honest log of building the "network, don't apply" recipe: what was attempted, what was expected, what actually happened, and what changed in response, with every entry marked by who acted — Shyam (the student) or Claude (the AI assistant doing most of the hands-on work at Shyam's request). It is worth reading because several of the most useful findings came from things going wrong: the setup made the repository look broken when it wasn't, the first version of the tool counted software-testing jobs as production management, and a test of the tests leaked files into the repository. The first-person section at the end was drafted by Claude from Shyam's own answers in chat and approved by him, and it is labelled that way.
 
 ## Who did what
 
@@ -11,10 +11,10 @@ This is the honest log of building the "network, don't apply" recipe: what was a
 | Chose the assignment option ("network targets"); gave the situation: MS Engineering Management, 12-month OPT, SOC 13-1082 and 11-3051. **Corrected the OPT date on 2026-10-02**: December 2026 is the start, not the end | Explained the assignment; proposed the four example designs; asked the clarifying questions |
 | Chose where the work lives (`JOB_Agent`) after the first folder failed | Cloned, installed, fixed the Windows environment outside the repo |
 | Asked Claude to draft the CHANGE-BRIEF predictions for him to edit | Drafted the brief and predictions, separating observations from predictions |
-| Asked "what to do" about the lifecycle status; approved the plan recommending RUNNABLE-SAMPLE with the conflict disclosed | Wrote the prototype, tests, fixtures, recipe, card, and write-ups; ran every command in this session |
+| Asked "what to do" about the lifecycle status; approved the plan recommending RUNNABLE-SAMPLE with the conflict disclosed | Wrote the prototype, tests, fixtures, recipe, card, and write-ups; ran every command except Shyam's own check (his test run and run 06) |
 | **Done 2026-10-02:** re-ran the tests and the tool himself (run 06); read the report; spot-checked IEX Group against the raw data; confirmed the IEX, Genies and Senti boards; signed the sample-run gate; approved his answers below. *Still to do:* ask the DSO the visa-path (G4) question; enter the EAD end date when known | Forked, pushed, and opened the PR after Shyam said "finish this task". Recorded his checks under his name only from his own chat answers |
 
-## Log (2026-10-01, local time EDT)
+## Log (2026-10-01 to 2026-10-02, local time EDT)
 
 Each entry: **tried → expected → happened → response → learned**, with a trace.
 
@@ -33,7 +33,7 @@ Each entry: **tried → expected → happened → response → learned**, with a
    - **42 groups of companies share an identical H-1B record** (CONVEY/COVEY, CAREDOX/CAREDX, BANYAN INFRASTRUCTURE/BARKING LABS).
 
    → Recorded as *observations*, kept separate from predictions in the CHANGE-BRIEF; built both checks into the prototype. *Trace:* `f7d5cd2`, CHANGE-BRIEF §6.
-5. **The scorer's defaults (Claude, reading code).** Found that a missing liveness gate counts as 1 (open), that funding isn't a scorer term, and that a profile saying "authorized" switches sponsorship off. → The prototype never sends a role without explicit liveness, and a characterization test pins that behaviour. *Trace:* `scripts/score/role-scorer.mjs` lines 58–60 and 83–84; test 17.
+5. **The scorer's defaults (Claude, reading code).** Found that a missing liveness gate counts as 1 (open), that funding isn't a scorer term, and that a profile saying "authorized" switches sponsorship off. → The prototype never sends a role without explicit liveness, and a characterization test pins that behaviour. *Trace:* `scripts/score/role-scorer.mjs` lines 58–60 and 83–84; the upstream-characterization test (now test 21).
 6. **Run 01 (Claude).** Expected few production-manager matches (prediction 2: three or fewer) → got **10**. → Listed the matches by vocabulary source: 8 came from O*NET 11-3051.01's "Quality Assurance Manager" alternate title, i.e. software QA jobs. → Limited the BLS vocabulary to the primary O*NET row; run 02 gave 2. *Learned:* a vocabulary taken from a record is still only a vocabulary. *Trace:* `runs/01-first-pass` vs `runs/02-primary-vocab`; commit `b30d64a`.
 7. **Board probing (Claude).** Guessed 33 board slugs → expected several hits → 28 were 404s; 5 boards found, and only the Greenhouse ones name their company. → Labelled Ashby/Lever board readings as model-judgment; kept a deliberately wrong slug (Zero Motorcycles) to prove that a failed check holds a company rather than closing it. *Trace:* `evidence/board-probe-2026-10-01.txt`, `evidence/scan-dry-run-2026-10-01.txt`.
 8. **UTC date (Claude).** The scanner banner said **2026-10-02** at 22:57 EDT on 2026-10-01; the scorer report also uses UTC. Recording the banner date would have held every company as "dated after the as-of date". → Observations use the local date; the guard stays. *Trace:* WORKED-RUN §3.
@@ -62,14 +62,16 @@ Each entry: **tried → expected → happened → response → learned**, with a
     - → A regression test rebuilds the condition. It fails on the old guard and passes on the new one (20/20).
     - → The PR was updated and the ZIP rebuilt and re-tested.
 
-    *Learned:* "it passes on my machine" is not "it passes where it will be opened". Test the artefact you hand in, not the folder you built it in. *Trace:* the commit after `5d9fca2`, TEST-REPORT (Canvas ZIP paragraph), test 18.
+    *Learned:* "it passes on my machine" is not "it passes where it will be opened". Test the artefact you hand in, not the folder you built it in. *Trace:* `c0bceb8`, TEST-REPORT (Canvas ZIP paragraph), the "repository inside the OS temp dir" test (now test 19).
+
+19. **Another session's files turned up in the submission folders (Claude noticed).** While recording Shyam's sign-off, `git status` showed 37 untracked files that neither of us had made: a different README, a `BROKEN-scorer` fixture, extra personas, and five run folders. All were timestamped within one second (2026-10-02 00:39:06–07). They came from an earlier Claude session on the same assignment, copied into the same folders. None had been committed, so the PR and ZIP were unaffected. → From then on only this session's files were staged, each by name. At Shyam's request all 37 were moved, not deleted, to `C:\Users\Shyam\JOB_Agent\other-session-files\` (outside the repository), with a note on where they came from. *Learned:* staging a whole folder (`git add -A <dir>`) trusts everything in it; name the files. *Trace:* commit `9799952` (staged by name); `other-session-files/README.txt` (outside the repository).
 
 ## Unresolved questions
 
 - The exact OPT end date on the EAD card (2027-12-30 is assumed).
 - Are the H-1B counts really doubled, and at which upstream step? This needs the USCIS export (recipe proposal 3).
 - For each shared-record pair, which company owns the record?
-- Do the Ashby `genies` and Lever `sentibio` boards belong to Genies Inc and Senti Biosciences?
+- *Resolved 2026-10-02:* whether the Ashby `genies` and Lever `sentibio` boards belong to Genies Inc and Senti Biosciences. Shyam opened both and confirmed them. That is a person's check, labelled your-input, not a record.
 - Is the degree STEM-designated? If so, a STEM OPT extension changes the whole timeline. **Only the DSO can answer this.**
 - Should funding become a scorer term, or stay outside the composite?
 - Is RUNNABLE-SAMPLE the right claim with six open proposal TODOs, or should a strict reading hold it at DRAFT?

@@ -203,7 +203,7 @@ Full output: `evidence/failure-cases-2026-10-01.txt` (earlier persona; pasted in
 | Case | Command difference | Output | Exit | Written? |
 |---|---|---|---|---|
 | F1 OPT end already past | `--as-of 2028-01-15` (corrected persona) | `STOP (G1): OPT end date 2027-12-30 is on or before the as-of date — refusing to score a window that has already closed` | 3 | no |
-| OPT start not before the end | persona with start 2028-01-01, end 2027-12-30 (test 9) | `STOP (G1): persona: visa.opt_start_date 2028-01-01 must be before visa.opt_end_date 2027-12-30` | 3 | no |
+| OPT start not before the end | persona with start 2028-01-01, end 2027-12-30 (test 10) | `STOP (G1): persona: visa.opt_start_date 2028-01-01 must be before visa.opt_end_date 2027-12-30` | 3 | no |
 | F2 SOC code with no row | persona with 13-1028 | `STOP (G1): SOC code 13-1028 has no row in data/bls/compact/soc_occupation_compact.csv — refusing to guess a title list for it` | 3 | no |
 | F3 observation for a company not in the CSV / not a candidate | `fixtures/break-liveness-unmatched.json` | `! liveness observations with no candidate: Quillfeather Assembly Works (not in the company CSV); 1LIFE HEALTHCARE INC (in the CSV but not a candidate …)` | 0 | yes; nothing invented |
 | F4 board check fails | Zero Motorcycles slug in run 03 | held: `result "unchecked" is not a usable liveness result` | 0 | held, not closed |
