@@ -134,18 +134,20 @@ ok 4 - record values are copied from the CSV, not computed or rounded
 ok 5 - a tier explanation names only the condition that actually failed
 ok 6 - liveness label follows who observed it and whether the board is confirmed
 ok 7 - F1: OPT end already past → exit 3, nothing written
-ok 8 - F2: SOC code with no row → exit 3, names the code, nothing written
-ok 9 - F3: liveness observations that match no candidate are reported, never invented
-ok 10 - F6: CSV missing a required column → exit 3, nothing written
-ok 11 - a stale or failed liveness check holds the company instead of closing it
-ok 12 - companies sharing an identical H-1B record are flagged for an identity check
-ok 13 - BLS vocabulary: primary O*NET row by default; "all" pulls in QA titles
-ok 14 - parity check is computed from the file, not hardcoded
-ok 15 - out-dir outside this contribution is refused, nothing written
-ok 16 - nothing checked yet → scorer is not run (no empty, NaN-rate report)
-ok 17 - upstream characterization: the scorer treats a MISSING liveness gate as open
-# tests 17
-# pass 17
+ok 8 - OPT not started yet: start reported, unemployment counted from the start, not from today
+ok 9 - an OPT start on or after the OPT end → exit 3, nothing written
+ok 10 - F2: SOC code with no row → exit 3, names the code, nothing written
+ok 11 - F3: liveness observations that match no candidate are reported, never invented
+ok 12 - F6: CSV missing a required column → exit 3, nothing written
+ok 13 - a stale or failed liveness check holds the company instead of closing it
+ok 14 - companies sharing an identical H-1B record are flagged for an identity check
+ok 15 - BLS vocabulary: primary O*NET row by default; "all" pulls in QA titles
+ok 16 - parity check is computed from the file, not hardcoded
+ok 17 - out-dir outside this contribution is refused, nothing written
+ok 18 - nothing checked yet → scorer is not run (no empty, NaN-rate report)
+ok 19 - upstream characterization: the scorer treats a MISSING liveness gate as open
+# tests 19
+# pass 19
 # fail 0
 ```
 
@@ -174,15 +176,30 @@ $ node scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-tar
   wrote course/2026fa/submissions/contactshyam14-code/runs/03-scored/network-targets.json + network-targets.md + roles.json + role-scores.json/.md
 ```
 
-**Cross-check of run 03 against the CSV** with an independent parser (Python's `csv` module): **30 of 30** values matched. Full output is in `evidence/cross-check-2026-10-01.txt`; the inputs, the scanner output, and the scorer's report are in WORKED-RUN.md.
+**Run 05 — the same run with the corrected OPT dates** (2026-10-02: December 2026 is the OPT *start*, not the end; see WORKED-RUN §7). Every company lands in the same group, with the same tier:
+
+```text
+$ node scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.mjs --as-of 2026-10-02 --liveness scripts/contrib/2026fa/contactshyam14-code-em-network-targets/inputs/liveness.2026-10-01.json --out-dir course/2026fa/submissions/contactshyam14-code/runs/05-corrected-opt-dates
+✓ 57 candidates from 1557 H-1B rows (13-1082: 55, 11-3051: 2)
+  network 4 · apply 1 · check-liveness 52 · skip 0
+  scorer: ✓ scored 5 roles → Apply 1 · Consider 0 · Skip 4 (skip 80%)
+  OPT window: 2026-12-31 → 2027-12-30 (starts in 90 days); 180 days available; timeline factor apply 1, network 1
+  ! parity: all 1557 approval and denial counts are even — counts probably doubled upstream
+  ! identity check needed: CONVEY INC, COVEY INC, LYNDRA THERAPEUTICS INC, LYRA THERAPEUTICS INC, SALESFORCE COM INC, SALESFORCECOM INC
+  gate G4 visa-path: awaiting human sign-off
+  wrote course/2026fa/submissions/contactshyam14-code/runs/05-corrected-opt-dates/network-targets.json + network-targets.md + roles.json + role-scores.json/.md
+```
+
+**Cross-check of run 03 against the CSV** with an independent parser (Python's `csv` module): **30 of 30** values matched. Full output is in `evidence/cross-check-2026-10-01.txt`, with run 05 also 30 of 30 in `evidence/cross-check-2026-10-02.txt`; the inputs, the scanner output, and the scorer's report are in WORKED-RUN.md.
 
 ## Each failure case, exercised on the real data
 
-Full output: `evidence/failure-cases-2026-10-01.txt` (pasted in WORKED-RUN §5).
+Full output: `evidence/failure-cases-2026-10-01.txt` (earlier persona; pasted in WORKED-RUN §5), and `evidence/failure-cases-2026-10-02.txt` (corrected persona; F1, F2, F6 and the out-dir case re-run, same results).
 
 | Case | Command difference | Output | Exit | Written? |
 |---|---|---|---|---|
-| F1 OPT end already past | `--as-of 2027-01-15` | `STOP (G1): OPT end date 2026-12-31 is on or before the as-of date — refusing to score a window that has already closed` | 3 | no |
+| F1 OPT end already past | `--as-of 2028-01-15` (corrected persona) | `STOP (G1): OPT end date 2027-12-30 is on or before the as-of date — refusing to score a window that has already closed` | 3 | no |
+| OPT start not before the end | persona with start 2028-01-01, end 2027-12-30 (test 9) | `STOP (G1): persona: visa.opt_start_date 2028-01-01 must be before visa.opt_end_date 2027-12-30` | 3 | no |
 | F2 SOC code with no row | persona with 13-1028 | `STOP (G1): SOC code 13-1028 has no row in data/bls/compact/soc_occupation_compact.csv — refusing to guess a title list for it` | 3 | no |
 | F3 observation for a company not in the CSV / not a candidate | `fixtures/break-liveness-unmatched.json` | `! liveness observations with no candidate: Quillfeather Assembly Works (not in the company CSV); 1LIFE HEALTHCARE INC (in the CSV but not a candidate …)` | 0 | yes; nothing invented |
 | F4 board check fails | Zero Motorcycles slug in run 03 | held: `result "unchecked" is not a usable liveness result` | 0 | held, not closed |
@@ -243,6 +260,6 @@ Both failing jobs fail for reasons outside this contribution, reproduced locally
 | Gate | What the person judges | State after this run |
 |---|---|---|
 | G2 Liveness | Is each board really the company's? Is a "nothing matching" reading right? Two of four networking targets (Genies, Senti) rest on unconfirmed boards | open for Genies and Senti |
-| G4 Visa-path sign-off | With the DSO or an attorney: does any path exist past a December-2026 OPT end (cap-exempt employer, STEM eligibility, another status)? No application is tailored until then | **not signed** |
+| G4 Visa-path sign-off | With the DSO or an attorney: which H-1B registration cycle(s) fall inside an OPT of 2026-12-31 → 2027-12-30, what happens if one isn't selected, and does STEM eligibility, a cap-exempt employer or another status change that? No application is tailored until then | **not signed** |
 | G5 Identity | For each flagged candidate: which company owns the shared record? | none of the 5 scored companies is flagged; 6 held candidates are flagged |
 | Sample-run adequacy | Has a named person read the run-03 report and found it fit for purpose? This sets the recipe's `last_gate` | **not yet** (Shyam) |

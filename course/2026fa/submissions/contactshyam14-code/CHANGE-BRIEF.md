@@ -89,3 +89,25 @@ Observed on 2026-10-01, before prototype code, with throwaway scripts outside th
 ## Revisions
 
 *(Shyam: add dated revisions here. Don't edit the sections above — the point is to keep the original record.)*
+
+### Revision 1 — 2026-10-02 · the OPT date was the start, not the end (correction by Shyam; recorded by Claude)
+
+Section 1 above says the OPT **ends** on 2026-12-31 and that about 91 days remain. Both are wrong. On 2026-10-02, Shyam corrected it: **December 2026 is the OPT start date.**
+
+- **The window is now** 2026-12-31 → about 2027-12-30. The end date is start + 12 months − 1 day, an assumption until the "Card Expires" date on the EAD is known.
+- **The deadline that bites** is earlier than the end. As understood (to confirm with the DSO), the 90 days of allowed unemployment count from the OPT start, so without an offer it is about 2027-03-31.
+- **The H-1B timing reverses.** The next cap registration, normally around March 2027, now falls **inside** the OPT window rather than after it. The visa-path question changes from "is there any path past December 2026?" to "which registration cycle(s) fall inside 2026-12-31 → 2027-12-30, and what happens if one isn't selected?"
+- **Effect on the runs:**
+  - Runs 01–04 used the wrong date.
+  - Run 05 repeats run 03 with the corrected persona. The buckets are identical, because the timeline gate was fully open in both (min(1, 91 ÷ 45) then, min(1, 180 ÷ 45) now).
+  - Only the report's description of the window and the visa-path question changed.
+- **Why it was missed:** Claude took "OPT ends December 2026" at face value and never asked for both dates on the EAD card. The prototype could not have caught it: a wrong but plausible date passes every check.
+
+### Revision 2 — 2026-10-02 · how the predictions in section 5 turned out (recorded by Claude; Shyam to confirm or amend)
+
+1. **Program-manager titles dominate: confirmed.** 27 companies match only on "program manager". ForgeRock's "Computer Systems Analyst (Senior IT Project Manager)" is counted as Proven project management.
+2. **Production-manager list of three or fewer: wrong on the first pass, right after a fix.** Run 01 found 10, eight of them software-QA titles from an O*NET sub-occupation's alternate titles. After limiting the vocabulary to the primary O*NET row, run 02 found 2.
+3. **The first real run holds everything, and the scorer prints NaN on zero roles: confirmed.** Run 01 held all candidates. The scorer printed `skip NaN%` when tested directly on an empty list. The prototype doesn't call it in that case.
+4. **The funding ranking will be partly wrong: not tested.** The five scored companies don't include the suspicious "Series D+" rows.
+
+Failure cases F1–F6 all behaved as specified (see TEST-REPORT). Prediction 1's caution was also borne out in a direction the brief didn't foresee: a vocabulary *from a record* (BLS/O*NET) was the source of the worst mismatch.

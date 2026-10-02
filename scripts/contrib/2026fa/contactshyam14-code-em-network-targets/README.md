@@ -17,7 +17,7 @@ It does not make the decision itself. It hands the evidence to the repository's 
 ## Run it (from the repository root)
 
 ```bash
-node scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.mjs --as-of 2026-10-01 --liveness scripts/contrib/2026fa/contactshyam14-code-em-network-targets/inputs/liveness.2026-10-01.json --out-dir course/2026fa/submissions/contactshyam14-code/runs/03-scored
+node scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.mjs --as-of 2026-10-02 --liveness scripts/contrib/2026fa/contactshyam14-code-em-network-targets/inputs/liveness.2026-10-01.json --out-dir course/2026fa/submissions/contactshyam14-code/runs/05-corrected-opt-dates
 ```
 
 Defaults when a flag is left out: persona `inputs/persona.shyam.json`, liveness `inputs/liveness.json` (empty — every company is held), as-of = today's local date, output `course/2026fa/submissions/contactshyam14-code/runs/latest/`. Node 20+; no npm install needed beyond the repository's own; no network.
@@ -28,7 +28,7 @@ Defaults when a flag is left out: persona `inputs/persona.shyam.json`, liveness 
 node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.test.mjs
 ```
 
-17 tests. They run the CLI as a black box into a temp directory and read what it wrote. The scorer they exercise is the real `scripts/score/role-scorer.mjs`; nothing here re-implements it. One test pins upstream behaviour (a missing liveness gate is treated as open) so a change to the scorer is noticed.
+19 tests. They run the CLI as a black box into a temp directory and read what it wrote. The scorer they exercise is the real `scripts/score/role-scorer.mjs`; nothing here re-implements it. One test pins upstream behaviour (a missing liveness gate is treated as open) so a change to the scorer is noticed.
 
 ## What it reads
 
@@ -59,7 +59,7 @@ The output directory must be inside `course/2026fa/submissions/contactshyam14-co
 
 ## Where it stops (exit 3, nothing written)
 
-- OPT end date on or before the as-of date; no days left under the 90-day unemployment limit (when the persona supplies days used).
+- OPT end date on or before the as-of date; an OPT start date not before the end date; no days left under the 90-day unemployment limit (when the persona supplies days used — counted from the OPT start if it hasn't started yet).
 - A target SOC code with no row in the BLS/O*NET file.
 - The company table lacks a required column, or a row's field count differs from the header.
 - Persona or liveness file missing, unparseable, or missing a required field.
@@ -68,6 +68,7 @@ Exit 4 means the scorer failed or its output changed shape. Companies with no us
 
 ## Rules that are the person's own input (edit them in the persona, not the code)
 
+- OPT start and end dates (the end is an assumption until the EAD's "Card Expires" date is entered) and unemployment days used.
 - Title keywords per SOC code, including which ones are ambiguous ("program manager").
 - `bls_title_rows`: `primary` uses only the SOC's `.00` O*NET row; `all` also uses sub-occupations (run 01 used `all` and pulled in eight software-QA titles as "production manager").
 - Tier rule: Proven = an unambiguous title match, approvals ≥ 10 and approval rate ≥ 90%; Likely = approval rate ≥ 50% (ambiguous-only matches are capped here); otherwise Possible. Tier → scorer number: 0.9 / 0.6 / 0.3.

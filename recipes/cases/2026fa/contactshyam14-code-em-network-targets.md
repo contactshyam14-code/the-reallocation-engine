@@ -2,7 +2,7 @@
 status: RUNNABLE-SAMPLE
 todos_open: 6
 last_gate: null
-# last_gate: Shyam fills after re-running and reading runs/03-scored/network-targets.md, e.g.
+# last_gate: Shyam fills after re-running and reading runs/05-corrected-opt-dates/network-targets.md, e.g.
 #   "sample-run adequacy, 2026-10-0X, Shyam Gopalakrishnan, logs/runs/2026fa-contactshyam14-code-1.md"
 attestation: null
 # attestation: set only at VERIFIED; this recipe has had no live gated run
@@ -15,9 +15,9 @@ recipe_version: 0.1.0
 
 **What it does.** Finds companies whose public visa record shows they have sponsored project-management or production-management job titles, checks whether a matching job is open at each one right now, and sorts them into four groups: *network first* (they sponsor this kind of role but nothing matching is open — ask for an informational conversation before the role exists), *apply* (a matching job is open), *check the job board first* (no usable check yet), and *skip*.
 
-**Who it is for.** A master's graduate in engineering management on twelve-month post-completion OPT, with no STEM extension, whose work permit ends in December 2026, targeting project-management and industrial-production-management roles and needing an employer who will sponsor an H-1B.
+**Who it is for.** A master's graduate in engineering management whose twelve-month post-completion OPT starts on 2026-12-31 and runs to about 2027-12-30 (no STEM extension claimed), targeting project-management and industrial-production-management roles and needing an employer who will sponsor an H-1B.
 
-**What it decides — and what it doesn't.** It decides nothing on its own. The repository's existing role scorer makes every Apply / Consider / Skip call; this recipe builds the scorer's input from checked records and sorts the scorer's verdicts into next actions. Two decisions stay with the person: whether a visa path exists after the permit ends (asked of the school's international-student office before any application is tailored), and whether a sponsorship record really belongs to the company it is attached to.
+**What it decides — and what it doesn't.** It decides nothing on its own. The repository's existing role scorer makes every Apply / Consider / Skip call; this recipe builds the scorer's input from checked records and sorts the scorer's verdicts into next actions. Two decisions stay with the person: which visa path the OPT window actually allows — which H-1B registration falls inside it, and what happens if it isn't selected (asked of the school's international-student office before any application is tailored), and whether a sponsorship record really belongs to the company it is attached to.
 
 **What it found on the sample run.** 57 candidate companies; one with an open matching job, four networking targets, 52 still to check. The source table's sponsorship counts are all even numbers — probably doubled upstream — and six candidates share an identical sponsorship record with a differently named company. Both are reported, not corrected.
 
@@ -63,7 +63,7 @@ Network hosts this recipe uses, only through the existing scanner's providers: `
 
 | Gate | Kind | Test | Pass | Fail |
 |---|---|---|---|---|
-| G1 Inputs | machine — halts the run | `node scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.mjs --as-of <date> --out-dir <dir>` exits 3 on any failure; preconditions: `test -f data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv && test -f data/bls/compact/soc_occupation_compact.csv && ls data/sec/form-d/processed/sample/*.sample.json` | exit 0, run folder written | exit 3 with `STOP (G1): …`, **nothing written**: OPT end on/before the as-of date; no days left under the 90-day unemployment limit; a target SOC code with no BLS row; a missing CSV column or a ragged row; a missing or unparseable persona/liveness file |
+| G1 Inputs | machine — halts the run | `node scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.mjs --as-of <date> --out-dir <dir>` exits 3 on any failure; preconditions: `test -f data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv && test -f data/bls/compact/soc_occupation_compact.csv && ls data/sec/form-d/processed/sample/*.sample.json` | exit 0, run folder written | exit 3 with `STOP (G1): …`, **nothing written**: OPT end on/before the as-of date; an OPT start not before the OPT end; no days left under the 90-day unemployment limit (counted from the OPT start); a target SOC code with no BLS row; a missing CSV column or a ragged row; a missing or unparseable persona/liveness file |
 | G2 Liveness | gate (multiplier) | `node -e "const r=require('./<dir>/roles.json'); process.exit(r.every(x=>typeof x.liveness?.factor==='number'&&typeof x.timeline?.factor==='number')?0:1)"` | every scored company carries an explicit liveness factor from a dated observation no older than 7 days | company is **held** (not scored): no observation, stale, dated after the as-of date, or `unchecked` |
 | G3 Visa timeline | gate (multiplier) | `node -e "const l=require('./<dir>/network-targets.json'); process.exit(l.timeline.network.factor>0.05?0:1)"` | timeline factor = min(1, days available ÷ hiring lag) above 0.05 | scorer skips the company (apply path) or it is skipped from networking (network path) |
 | G4 Visa-path sign-off | human only | `grep -Eq 'G4 visa-path:[*]* *signed' logs/runs/2026fa-contactshyam14-code-1.md` | a dated line naming who confirmed a post-OPT path (DSO or immigration attorney) and which path | no application is tailored; networking may continue |
@@ -86,7 +86,7 @@ Network hosts this recipe uses, only through the existing scanner's providers: `
 ```bash
 node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.test.mjs
 REALLOCATION_ENGINE_PORTALS=scripts/contrib/2026fa/contactshyam14-code-em-network-targets/inputs/portals.network-targets.yml node scripts/ats/scan.mjs --dry-run
-node scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.mjs --as-of 2026-10-01 --liveness scripts/contrib/2026fa/contactshyam14-code-em-network-targets/inputs/liveness.2026-10-01.json --out-dir course/2026fa/submissions/contactshyam14-code/runs/03-scored
+node scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.mjs --as-of 2026-10-02 --liveness scripts/contrib/2026fa/contactshyam14-code-em-network-targets/inputs/liveness.2026-10-01.json --out-dir course/2026fa/submissions/contactshyam14-code/runs/05-corrected-opt-dates
 node scripts/conformance.mjs recipes/cases/2026fa scripts/contrib/2026fa/contactshyam14-code-em-network-targets
 ```
 
@@ -108,7 +108,7 @@ node scripts/conformance.mjs recipes/cases/2026fa scripts/contrib/2026fa/contact
 - **Funding outside 200 sampled filings**, or that a funding row in the table belongs to the named company (old "Series D+" rows on large public companies look like mis-attributed filings). Funding has no term in the scorer; it is only used to rank within a group.
 - **That a listed website is the company's careers site** — the upstream pipeline guesses domains from names.
 - **That an Ashby or Lever board belongs to the company** — those APIs return no board name.
-- **Anything about visa law.** The timeline factor is arithmetic on the person's own dates and assumptions. Whether a December-2026 OPT end leaves any path to an H-1B is a question for the DSO or an attorney.
+- **Anything about visa law.** The timeline factor is arithmetic on the person's own dates and assumptions. Which H-1B registration cycle(s) fall inside a 2026-12-31 → 2027-12-30 OPT window, what happens if a registration is not selected, and whether the degree is STEM-eligible are questions for the DSO or an attorney. (The 90-day unemployment allowance counting from the OPT start is the person's understanding, entered as input, not a rule this tool verifies.)
 - **Fit** between the person and a posting — not assessed; the scorer's fit vote is left empty, not guessed.
 
 ## Facts that bite — how this recipe handles each
@@ -181,7 +181,7 @@ The 3 credibility hours are not produced by this recipe, but building and honest
 
 ## Verification checks
 
-- `node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.test.mjs` — 17 offline tests, including a characterization test of the scorer's missing-gate default.
+- `node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.test.mjs` — 19 offline tests, including a characterization test of the scorer's missing-gate default.
 - `node scripts/conformance.mjs recipes/cases/2026fa scripts/contrib/2026fa/contactshyam14-code-em-network-targets` and `npm run verify`.
 - Cross-check: `python course/2026fa/submissions/contactshyam14-code/evidence/cross-check.py data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv <out-dir>/network-targets.json` — every scored company's record values against the CSV with an independent parser.
 - Break attempts: the failure cases in `course/2026fa/submissions/contactshyam14-code/evidence/failure-cases-2026-10-01.txt`; the mutation runs in `…/evidence/mutation-tests-2026-10-01.txt`.
@@ -208,7 +208,7 @@ The 3 credibility hours are not produced by this recipe, but building and honest
 
 **Claimed: RUNNABLE-SAMPLE.** The constitution's evidence for that stage exists:
 
-- a full sample run (runs 01–03, plus a clean-checkout re-run that matches except the timestamp);
+- a full sample run (runs 01–03, plus a clean-checkout re-run that matches except the timestamp; run 05 repeats it with the corrected OPT dates);
 - conformance passes;
 - audits are generated (the parity and shared-record checks, and the report);
 - a run-log entry exists.
@@ -223,5 +223,5 @@ Not claimed: RUNNABLE-LIVE (no live run with every gate cleared by a human) or V
 ## Provenance
 
 - Drafted 2026-10-01 by Claude (AI) at Shyam's request, from the repository's data and the prototype's real runs. Reviewed by Shyam: *(date, after review)*.
-- Branch `contrib/2026fa-contactshyam14-code-em-network-targets`; change brief committed before any code (`f7d5cd2`); prototype `b30d64a`; hardening `a309e8c`; cross-check `f396526`.
+- Branch `contrib/2026fa-contactshyam14-code-em-network-targets`; change brief committed before any code (`f7d5cd2`); prototype `b30d64a`; hardening `a309e8c`; cross-check `f396526`; recipe and card `a0feadb`; OPT-start correction `987f927` (2026-10-02: December 2026 is the OPT start, not the end — runs 01–04 used the wrong date; run 05 is the corrected run, with identical buckets).
 - Data: the files in Source Inventory as shipped at upstream commit `015843d`; SHA-256s in each run's `network-targets.json`.

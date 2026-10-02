@@ -4,12 +4,12 @@
 
 This document records the prototype being run end to end on the repository's own data for one person's situation, with the real terminal output pasted in. Read it to see what the tool actually produced, which parts are checked records and which are the person's own rules or a model's judgment, and what went wrong along the way.
 
-It found 57 companies whose public sponsorship record includes a project- or production-management title. One has a matching job open now (IEX Group, a project-manager role in New York). Four are networking targets: Unqork and Rondo Energy on a confirmed board check, plus Genies and Senti Biosciences whose job boards still need a person to confirm they are really the company's. The other 52 still need their boards checked, including both production-management sponsors. The source table has two problems no existing audit reports, and three things in the prototype broke during the build and were fixed.
+It found 57 companies whose public sponsorship record includes a project- or production-management title. One has a matching job open now (IEX Group, a project-manager role in New York). Four are networking targets: Unqork and Rondo Energy on a confirmed board check, plus Genies and Senti Biosciences whose job boards still need a person to confirm they are really the company's. The other 52 still need their boards checked, including both production-management sponsors. The source table has two problems no existing audit reports, and several things broke during the build and were fixed. One correction came from Shyam after these runs: the date first given as the work permit's end (December 2026) is its start. Run 05 repeats the scored run with the corrected dates, and every company lands in the same group.
 
 ## Run record
 
 - **Ran by:** Claude (AI), in Shyam's session on 2026-10-01 (local time, EDT). **Shyam re-runs the attestation rows and signs.**
-- **Code:** prototype at commit `5462a0c` for run 03 and the failure cases. Runs 01 and 02 came from uncommitted intermediate versions earlier the same evening; their saved output is in `runs/01-first-pass/` and `runs/02-primary-vocab/`.
+- **Code:** prototype at commit `5462a0c` for run 03 and the 2026-10-01 failure cases; `987f927` for run 05 (corrected OPT dates, 2026-10-02) and the 2026-10-02 failure cases. Runs 01 and 02 came from uncommitted intermediate versions earlier the same evening; their saved output is in `runs/01-first-pass/` and `runs/02-primary-vocab/`.
 - **Data:** as shipped at upstream commit `015843d`, sample data only. Full Form D quarters are not in a fresh clone.
 - **Machine:** Windows 11, Node v22.12.0, Python 3.12.5 (behind a `python3` shim outside the repository), Git Bash.
 
@@ -17,10 +17,10 @@ It found 57 companies whose public sponsorship record includes a project- or pro
 
 | Input | Value | Label |
 |---|---|---|
-| Persona | "Shyam" (`inputs/persona.shyam.json`, sha256 `892c0fb8f1ab113f…`): MS Engineering Management; F-1, 12-month OPT, no STEM extension; OPT end 2026-12-31; unemployment days used not supplied; needs sponsorship | your-input |
+| Persona | "Shyam" (`inputs/persona.shyam.json`): MS Engineering Management; F-1, 12-month OPT, no STEM extension; needs sponsorship. **Runs 01–04** (sha256 `892c0fb8f1ab113f…`): OPT *end* 2026-12-31, unemployment days not supplied. **Run 05** (sha256 `0b2086544864b565…`): OPT *start* 2026-12-31, end 2027-12-30 (assumed: start + 12 months − 1 day), unemployment days used 0 | your-input |
 | Targets | 13-1082 keywords: project manager, project management, project coordinator, project administrator; ambiguous: program manager, program management. 11-3051 keywords: production manager, plant manager, manufacturing manager, factory manager, assembly manager. Plus BLS/O*NET titles of each SOC's primary row | your-input (keywords); record (BLS titles) |
 | Rules | Proven ≥ 10 approvals and ≥ 90% with an unambiguous match; Likely ≥ 50%; tier → 0.9 / 0.6 / 0.3; hiring lag 45 days (apply), 75 days (network); liveness stale after 7 days; networking tiers Proven and Likely; recent funding within 24 months | your-input |
-| As-of date | 2026-10-01 | your-input |
+| As-of date | 2026-10-01 (runs 01–04); 2026-10-02 (run 05) | your-input |
 | Liveness | `inputs/liveness.2026-10-01.json` (sha256 `8c6a44522eba276e…`), transcribed from the scanner output below | record (3), model-judgment (2, board unconfirmed), held (1, check failed) |
 | 80 Days table | `data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv`, sha256 `eccdee2addf472b1…` (identical to the SHA-256 in the repository's own audit of that file) | record |
 | BLS/O*NET | `data/bls/compact/soc_occupation_compact.csv`, sha256 `bac5acf77ca2d252…` | record |
@@ -187,6 +187,8 @@ Zero Motorcycles, whose board check failed, is in the held group: `result "unche
 
 ### 5. Failure cases on the real data (`evidence/failure-cases-2026-10-01.txt`)
 
+These ran with the earlier persona, whose "OPT end" of 2026-12-31 was really the start; F1 was re-run with the corrected dates in §7.
+
 ```text
 ### F1 OPT end already past (as-of after 2026-12-31)
 $ node scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.mjs --as-of 2027-01-15 --out-dir course/2026fa/submissions/contactshyam14-code/runs/f1
@@ -242,6 +244,41 @@ exit: 0
 **Summary:** 0 roles → Apply 0 · Consider 0 · Skip 0. **Skip rate NaN%** (below the ~50% a healthy run skips; check the inputs).
 ```
 
+### 7. Correction — the OPT dates (run 05)
+
+After runs 01–04, Shyam corrected the persona: **December 2026 is his OPT start date, not the end.** The persona now has `opt_start_date` 2026-12-31 and `opt_end_date` 2027-12-30. The end is an assumption, start + 12 months − 1 day, until the EAD's "Card Expires" date is known. `unemployment_days_used` is 0, because OPT hasn't started. The prototype now counts the 90-day unemployment allowance from the OPT start, and says so in the report.
+
+```text
+$ node scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.mjs --as-of 2026-10-02 --liveness scripts/contrib/2026fa/contactshyam14-code-em-network-targets/inputs/liveness.2026-10-01.json --out-dir course/2026fa/submissions/contactshyam14-code/runs/05-corrected-opt-dates
+✓ 57 candidates from 1557 H-1B rows (13-1082: 55, 11-3051: 2)
+  network 4 · apply 1 · check-liveness 52 · skip 0
+  scorer: ✓ scored 5 roles → Apply 1 · Consider 0 · Skip 4 (skip 80%)
+  OPT window: 2026-12-31 → 2027-12-30 (starts in 90 days); 180 days available; timeline factor apply 1, network 1
+  ! parity: all 1557 approval and denial counts are even — counts probably doubled upstream
+  ! identity check needed: CONVEY INC, COVEY INC, LYNDRA THERAPEUTICS INC, LYRA THERAPEUTICS INC, SALESFORCE COM INC, SALESFORCECOM INC
+  gate G4 visa-path: awaiting human sign-off
+  wrote course/2026fa/submissions/contactshyam14-code/runs/05-corrected-opt-dates/network-targets.json + network-targets.md + roles.json + role-scores.json/.md
+```
+
+The 180 days available are 90 days until the OPT starts plus the 90-day unemployment allowance. The timeline factor is min(1, 180 ÷ 45) = 1 for applying and min(1, 180 ÷ 75) = 1 for networking. In run 03 it was min(1, 91 ÷ 45) = 1, so the gate was open in both runs. A script check confirmed that **all 57 companies have the same group and tier as in run 03**. What changed is how the report describes the situation:
+
+```text
+It is for a master's graduate in engineering management on a twelve-month work permit that runs from 2026-12-31 to 2027-12-30 and has not started yet, so no job can begin before 2026-12-31.
+- **Visa-path sign-off — awaiting human sign-off.** OPT runs 2026-12-31 to 2027-12-30 with no STEM extension claimed. Before tailoring any application, a DSO or immigration attorney must confirm which H-1B registration cycle(s) fall inside that window, what happens if a registration is not selected, and whether STEM eligibility of the degree, a cap-exempt employer, or another status changes that. This tool cannot answer that.
+```
+
+F1 had to move with the dates. A window that has closed is now any as-of date after 2027-12-30 (`evidence/failure-cases-2026-10-02.txt`):
+
+```text
+$ node scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.mjs --as-of 2028-01-15 --out-dir course/2026fa/submissions/contactshyam14-code/runs/f1
+STOP (G1): OPT end date 2027-12-30 is on or before the as-of date — refusing to score a window that has already closed
+Nothing was written.
+exit: 3
+output dir exists afterwards: no
+```
+
+The CSV cross-check on run 05: 30 of 30 values match (`evidence/cross-check-2026-10-02.txt`).
+
 ## Verified vs. inferred — line by line
 
 **IEX GROUP INC (apply)**
@@ -259,7 +296,7 @@ exit: 0
 | Tier | Proven | your-input | the persona's rule applied to record values |
 | Sponsorship number for the scorer | 0.9 | your-input | the persona's tier-to-number mapping. No record produces a probability |
 | Liveness | 1: "Project Manager", New York | record | the repository scanner's output is saved, and Greenhouse names the board "IEX Group" |
-| Timeline | 1.0 = min(1, 91 ÷ 45) | your-input | OPT end, as-of date and hiring lag are the person's |
+| Timeline | 1.0 = min(1, 91 ÷ 45) in run 03; min(1, 180 ÷ 45) in run 05 | your-input | OPT dates, as-of date and hiring lag are the person's |
 | Decision | Apply, composite 0.315 | your-input (computed) | the repository scorer's arithmetic on the terms above. A calculation, not evidence |
 | Fit | — | not assessed | the vote is left empty, not guessed |
 
@@ -295,7 +332,7 @@ No value in the run is labelled model-judgment except those two liveness reading
    ```
 
 2. **Provenance of the table.** Its SHA-256 equals the one recorded in the repository's 2026-05-28 audit of the same file, so the counts here are the audited file's counts.
-3. **Tests.** 17 offline tests pass (`node --test …/network-targets.test.mjs`). One pins the scorer's missing-gate default.
+3. **Tests.** 19 offline tests pass (`node --test …/network-targets.test.mjs`). One pins the scorer's missing-gate default.
 4. **Deliberate breaks (mutations), run against the 16-test suite of the time** (`evidence/mutation-tests-2026-10-01.txt`). Each one was caught:
    - M1, treat a missing check as open: 3 tests failed.
    - M2, label the tier "record": 1 test failed.
@@ -319,6 +356,8 @@ No value in the run is labelled model-judgment except those two liveness reading
 - **One of my own break-test inputs named a company that is actually in the CSV.** Caught only because I grepped the real file first.
 - **Not covered:** both production-management sponsors (Zero Motorcycles, Endotronix) have no board the scanner can read, so the companies most relevant to an engineering-management graduate are still held, and 52 of 57 candidates are unchecked.
 
+- **The date everything rested on was wrong.** "OPT ends December 2026" was taken at face value, and both dates on the EAD card were never asked for. Shyam's correction (it's the start) reversed the H-1B timing story, though not a single bucket. No check in the tool could catch it, because a wrong but plausible date passes every test. The gate is the person reading the report.
+
 **Predictions vs. outcome.**
 - **Prediction 1** (program-manager titles dominate): confirmed. 27 companies match only on "program manager"; ForgeRock's "Computer Systems Analyst (Senior IT Project Manager)" is counted as Proven project management.
 - **Prediction 2** (production list three or fewer): wrong on the first pass (10), right after the fix (2).
@@ -336,11 +375,13 @@ No value in the run is labelled model-judgment except those two liveness reading
 
 | Ran | Saw | Expected |
 |---|---|---|
-| `node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.test.mjs` | 17 pass, 0 fail | all pass, offline |
+| `node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.test.mjs` | 19 pass, 0 fail | all pass, offline |
+| Run 05 command (§7) with the corrected OPT dates | same 57 candidates, same groups and tiers as run 03; OPT window 2026-12-31 → 2027-12-30, starts in 90 days; 180 days available | buckets unchanged; window described correctly |
 | Run 03 command (above) | 57 candidates; network 4, apply 1, check-liveness 52, skip 0; scorer Apply 1, Skip 4 (80%) | at least half skipped; no company scored without a liveness factor |
 | `scan.mjs --dry-run` on 6 boards | 28 jobs, 1 matching (IEX Group), 1 error (Zero Motorcycles 404) | errors reported, not hidden |
 | `python …/cross-check.py <csv> <run 03 log>` | 30 OK, 0 MISMATCH | every value equals the CSV |
-| **Break:** `--as-of 2027-01-15` | `STOP (G1)`, exit 3, no folder | refuse; write nothing |
+| **Break:** `--as-of 2028-01-15` (after the corrected OPT end) | `STOP (G1): OPT end date 2027-12-30 is on or before the as-of date`, exit 3, no folder | refuse; write nothing |
+| **Break:** OPT start not before the OPT end (test) | `STOP (G1)`, exit 3, no folder | refuse; write nothing |
 | **Break:** SOC 13-1082 typed as 13-1028 | `STOP (G1)` naming 13-1028, exit 3 | refuse; write nothing |
 | **Break:** `Approval_Rate` column renamed | `STOP (G1)`, exit 3 | refuse; write nothing |
 | **Break:** `--out-dir data/examples/should-refuse` | exit 2, no folder | refuse; never touch tracked files |
@@ -350,6 +391,8 @@ No value in the run is labelled model-judgment except those two liveness reading
 | **Break:** the scorer on 0 roles | `skip NaN%` | NaN, as predicted |
 
 ### Did not test
+
+- The real OPT end date. 2027-12-30 is assumed (start + 12 months − 1 day) until the EAD's "Card Expires" date is entered.
 
 - A live run with a person clearing every gate (that would be RUNNABLE-LIVE).
 - Boards on Workday, iCIMS, Taleo or SuccessFactors, which most large employers use. The scanner has no provider for them.
@@ -363,6 +406,8 @@ No value in the run is labelled model-judgment except those two liveness reading
 - Any visa-path question (gate G4). That is not something this tool can test.
 
 ### Broke during testing, fixed
+
+- **The persona's OPT date was the start, not the end** (Shyam's correction, 2026-10-02). The persona now has both dates, and the prototype counts the unemployment allowance from the start and describes the window. 2 tests added; run 05 and the failure cases were re-run (`987f927`).
 
 - **QA titles counted as production management (run 01).** BLS vocabulary is now limited to the primary O*NET row; the persona's `bls_title_rows` can switch it back (`network-targets.mjs`, `loadSocVocab`).
 - **Tier explanation blamed the wrong condition.** It now names only the failed one, with a test (`a0feadb`).

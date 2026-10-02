@@ -27,7 +27,7 @@ Answer one question for an engineering-management graduate on 12-month OPT: *whi
 - That the sponsorship record belongs to this company and not a lookalike name.
 - Which years the record covers, or whether the company sponsors now.
 - Funding beyond 200 sampled filings; that the listed website is real; that a Lever or Ashby board is the company's.
-- Anything about visa law. Whether a December-2026 OPT end leaves a path to an H-1B is a question for your DSO or an immigration attorney.
+- Anything about visa law. Which H-1B registration falls inside an OPT that runs 2026-12-31 → 2027-12-30, what happens if it isn't selected, and whether your degree is STEM-eligible are questions for your DSO or an immigration attorney.
 - Whether you fit a given posting.
 
 ## Dependencies
@@ -39,7 +39,7 @@ Answer one question for an engineering-management graduate on 12-month OPT: *whi
 
 ## Annotated commands
 
-Tests first (offline, about 20 seconds; expect 17 passing):
+Tests first (offline, about 20 seconds; expect 19 passing):
 
 ```bash
 node --test scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.test.mjs
@@ -51,16 +51,16 @@ Check the boards (network; prints matching postings and an error list — save t
 REALLOCATION_ENGINE_PORTALS=scripts/contrib/2026fa/contactshyam14-code-em-network-targets/inputs/portals.network-targets.yml node scripts/ats/scan.mjs --dry-run
 ```
 
-Run the sort (expect 57 candidates; network 4, apply 1, check-liveness 52 on the 2026-10-01 evidence):
+Run the sort (expect 57 candidates; network 4, apply 1, check-liveness 52 on the 2026-10-01 board evidence; the console also prints the OPT window):
 
 ```bash
-node scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.mjs --as-of 2026-10-01 --liveness scripts/contrib/2026fa/contactshyam14-code-em-network-targets/inputs/liveness.2026-10-01.json --out-dir course/2026fa/submissions/contactshyam14-code/runs/03-scored
+node scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.mjs --as-of 2026-10-02 --liveness scripts/contrib/2026fa/contactshyam14-code-em-network-targets/inputs/liveness.2026-10-01.json --out-dir course/2026fa/submissions/contactshyam14-code/runs/05-corrected-opt-dates
 ```
 
 A window that has closed (expect `STOP (G1)`, exit 3, nothing written):
 
 ```bash
-node scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.mjs --as-of 2027-01-15 --out-dir course/2026fa/submissions/contactshyam14-code/runs/f1
+node scripts/contrib/2026fa/contactshyam14-code-em-network-targets/network-targets.mjs --as-of 2028-01-15 --out-dir course/2026fa/submissions/contactshyam14-code/runs/f1
 ```
 
 ## What it produces

@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-A record of the first sample runs of the "network, don't apply" recipe for an engineering-management graduate on twelve-month OPT. The tool ran end to end on the repository's shipped data and found one open matching job, four networking targets, and 52 companies still to check. It flagged two problems in the source data. Both visa and identity checkpoints are still waiting for a person.
+A record of the first sample runs of the "network, don't apply" recipe for an engineering-management graduate on twelve-month OPT. The tool ran end to end on the repository's shipped data and found one open matching job, four networking targets, and 52 companies still to check. It flagged two problems in the source data. Both visa and identity checkpoints are still waiting for a person. A second entry (2026-10-02) records Shyam's correction that December 2026 is his OPT start, not its end, and the re-run that followed.
 
 ## 2026-10-01 — em-network-targets sample run (runs 01–03, failure cases, break tests)
 
@@ -29,3 +29,25 @@ A record of the first sample runs of the "network, don't apply" recipe for an en
 - **G5 identity:** none of the 5 scored companies is flagged. Six flagged candidates (CONVEY/COVEY, LYNDRA/LYRA THERAPEUTICS, SALESFORCE COM/SALESFORCECOM) are held and not contacted.
 - **Sample-run adequacy (sets the recipe's `last_gate`):** not yet read by a human. *Shyam: after re-running, replace this line with "read by Shyam Gopalakrishnan, YYYY-MM-DD", plus anything you disagree with.*
 - **Who did what:** Claude (AI) ran every command and drafted this entry. Shyam supplied the situation and the design choice, and must sign the gates.
+
+## 2026-10-02 — em-network-targets run 05 (corrected OPT dates)
+
+- **Recipe:** manual (`recipes/cases/2026fa/contactshyam14-code-em-network-targets.md` v0.1.0)
+- **Inputs:**
+  - persona corrected by Shyam: OPT **start** 2026-12-31, end 2027-12-30 (assumed: start + 12 months − 1 day), unemployment days used 0
+  - liveness `…/inputs/liveness.2026-10-01.json` (1 day old)
+  - as-of 2026-10-02
+  - same data files
+- **Outputs:**
+  - `course/2026fa/submissions/contactshyam14-code/runs/05-corrected-opt-dates/`
+  - `…/evidence/failure-cases-2026-10-02.txt`, `…/evidence/cross-check-2026-10-02.txt`
+- **Result:**
+  - 57 candidates; network 4 · apply 1 · check-liveness 52 · skip 0. Every company has the same group and tier as in run 03.
+  - OPT window 2026-12-31 → 2027-12-30 (starts in 90 days); 180 days available; timeline factor 1 on both paths.
+  - Cross-check 30/30; 19/19 tests; F1 (as-of 2028-01-15), F2, F6 and out-dir refusals as specified.
+- **Open issues:**
+  - The real EAD end date is unknown (2027-12-30 is assumed).
+  - Runs 01–04 used the wrong date: an end of 2026-12-31 that was really the start.
+- **G4 visa-path:** not signed. The question is now which H-1B registration falls inside the window, and what happens if it isn't selected.
+- **G5 identity:** unchanged from 2026-10-01.
+- **Sample-run adequacy:** not yet read by a human. *Shyam: replace with "read by Shyam Gopalakrishnan, YYYY-MM-DD".*

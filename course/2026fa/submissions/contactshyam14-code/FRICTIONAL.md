@@ -8,7 +8,7 @@ This is the honest log of building the "network, don't apply" recipe: what was a
 
 | Shyam (human) | Claude (AI) |
 |---|---|
-| Chose the assignment option ("network targets"); gave the situation: MS Engineering Management, 12-month OPT ending December 2026, SOC 13-1082 and 11-3051 | Explained the assignment; proposed the four example designs; asked the clarifying questions |
+| Chose the assignment option ("network targets"); gave the situation: MS Engineering Management, 12-month OPT, SOC 13-1082 and 11-3051. **Corrected the OPT date on 2026-10-02**: December 2026 is the start, not the end | Explained the assignment; proposed the four example designs; asked the clarifying questions |
 | Chose where the work lives (`JOB_Agent`) after the first folder failed | Cloned, installed, fixed the Windows environment outside the repo |
 | Asked Claude to draft the CHANGE-BRIEF predictions for him to edit | Drafted the brief and predictions, separating observations from predictions |
 | Asked "what to do" about the lifecycle status; approved the plan recommending RUNNABLE-SAMPLE with the conflict disclosed | Wrote the prototype, tests, fixtures, recipe, card, and write-ups; ran every command in this session |
@@ -49,8 +49,17 @@ Each entry: **tried → expected → happened → response → learned**, with a
 
 16. **Pasting the privacy scan re-created its finding (Claude).** TEST-REPORT and `evidence/pii-scan-after.txt` pasted the scan output verbatim, including the flagged email address from upstream's `package-lock.json`. The final branch-history scan then reported **2 findings in my own files**. Deleting them in a later commit wouldn't help, because CI scans the whole branch history. → Redacted the address with a visible note and amended that single local commit; nothing had been pushed. The branch-history scan was clean again. *Learned:* evidence about sensitive data must not contain the sensitive data. *Trace:* TEST-REPORT §Privacy scan; `evidence/pii-scan-after.txt` header note.
 
+17. **The date everything rested on was wrong (Shyam caught it; Claude had missed it).** Shyam's first message said "OPT ends December 2026". Claude built the persona, the 91-days-left framing, the visa-path question, and the domain justification on that, and never asked for both dates on the EAD card. Answering the sign-off questions on 2026-10-02, Shyam said *"its my start date"*.
+    - → The persona now has a start (2026-12-31) and an end (2027-12-30, assumed as start + 12 months − 1 day).
+    - → The prototype counts the 90-day unemployment allowance from the OPT start, and the report describes the window.
+    - → The change brief gets a revision rather than a rewrite.
+    - → Run 05 and the failure cases were re-run. Every company kept its group and tier (the timeline gate was open in both), but the H-1B timing story reversed: the March registration now falls inside the window, which makes October–March the months that matter.
+
+    *Learned:* no test catches a wrong but plausible input. Ask for the exact source document (here, the EAD card), not a paraphrase. *Trace:* `987f927`, CHANGE-BRIEF Revision 1, WORKED-RUN §7.
+
 ## Unresolved questions
 
+- The exact OPT end date on the EAD card (2027-12-30 is assumed).
 - Are the H-1B counts really doubled, and at which upstream step? This needs the USCIS export (recipe proposal 3).
 - For each shared-record pair, which company owns the record?
 - Do the Ashby `genies` and Lever `sentibio` boards belong to Genies Inc and Senti Biosciences?
