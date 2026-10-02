@@ -376,7 +376,7 @@ No value in the run is labelled model-judgment except those two liveness reading
 
 ## Reflection
 
-*(Drafted by Claude from what happened; Shyam to edit and add his own view.)*
+*(Drafted by Claude from what happened. Shyam's own reflection, in his words, is in FRICTIONAL under "in my own words".)*
 
 **What worked.**
 - Keeping liveness as an explicit gate that holds a company, never defaulting it. That was the single most important choice: the scorer would otherwise have scored all 57 companies as having an open role.

@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-This is the honest log of building the "network, don't apply" recipe: what was attempted, what was expected, what actually happened, and what changed in response, with every entry marked by who acted — Shyam (the student) or Claude (the AI assistant doing most of the hands-on work at Shyam's request). It is worth reading because several of the most useful findings came from things going wrong: the setup made the repository look broken when it wasn't, the first version of the tool counted software-testing jobs as production management, and a test of the tests leaked files into the repository. The first-person section at the end was drafted by Claude from Shyam's own answers in chat and approved by him, and it is labelled that way.
+This is the honest log of building the "network, don't apply" recipe: what was attempted, what was expected, what actually happened, and what changed in response, with every entry marked by who acted — Shyam (the student) or Claude (the AI assistant doing most of the hands-on work at Shyam's request). It is worth reading because several of the most useful findings came from things going wrong: the setup made the repository look broken when it wasn't, the first version of the tool counted software-testing jobs as production management, and a test of the tests leaked files into the repository. The first-person section at the end is in Shyam's own words, with two small wording notes that it states itself.
 
 ## Who did what
 
@@ -12,7 +12,7 @@ This is the honest log of building the "network, don't apply" recipe: what was a
 | Chose where the work lives (`JOB_Agent`) after the first folder failed | Cloned, installed, fixed the Windows environment outside the repo |
 | Asked Claude to draft the CHANGE-BRIEF predictions for him to edit | Drafted the brief and predictions, separating observations from predictions |
 | Asked "what to do" about the lifecycle status; approved the plan recommending RUNNABLE-SAMPLE with the conflict disclosed | Wrote the prototype, tests, fixtures, recipe, card, and write-ups; ran every command except Shyam's own check (his test run and run 06) |
-| **Done 2026-10-02:** re-ran the tests and the tool himself (run 06); read the report; spot-checked IEX Group against the raw data; confirmed the IEX, Genies and Senti boards; signed the sample-run gate; approved his answers below. *Still to do:* ask the DSO the visa-path (G4) question; enter the EAD end date when known | Forked, pushed, and opened the PR after Shyam said "finish this task". Recorded his checks under his name only from his own chat answers |
+| **Done 2026-10-02:** re-ran the tests and the tool himself (run 06); read the report; spot-checked IEX Group against the raw data; confirmed the IEX, Genies and Senti boards; signed the sample-run gate; wrote his own answers below. *Still to do:* ask the DSO the visa-path (G4) question; enter the EAD end date when known | Forked, pushed, and opened the PR after Shyam said "finish this task". Recorded his checks under his name only from his own chat answers |
 
 ## Log (2026-10-01 to 2026-10-02, local time EDT)
 
@@ -78,20 +78,20 @@ Each entry: **tried → expected → happened → response → learned**, with a
 
 ## Shyam — in my own words
 
-*Drafted by Claude from Shyam's answers in chat, and approved by Shyam on 2026-10-02 ("use the draft"). For item 4 he chose two of the four options offered.*
+*Shyam's own answers, written in chat on 2026-10-02 and pasted here verbatim. Two notes on the wording: answer 1 is a sentence he kept from an example Claude gave him, and answer 4 is his idea in wording Claude lightly polished and he then approved. These replace an earlier version of this section that Claude had drafted from his answers.*
 
 **What I checked myself when I re-ran it:**
 
-> I ran the 20 tests myself and all passed. I ran the tool into my own folder and got the same result as Claude's run: 57 companies, 4 to network with, 1 to apply to, 52 still to check. I compared IEX Group's line in the raw data (`2014-08-22 | 14.0 | 0.0 | 100.0 | 180000.0 | ['Project Manager']`) with my report, and it matched. I opened the IEX, Genies and Senti job boards: the IEX Project Manager job is listed, and the Genies and Senti pages belong to those companies.
+> When I opened the IEX job board, the Project Manager job was still listed, and the Genies and Senti pages belonged to the right companies.
 
 **What I accepted from Claude's work, and why:**
 
-> I accepted the 'network, don't apply' design and the rules in my persona file as drafted. I also accepted leaving the visa question to my DSO instead of letting the tool answer it.
+> I agree most with network-first because it helps me understand the company and build connections before applying.
 
 **What I changed or rejected:**
 
-> I corrected my OPT date: December 2026 is when my OPT starts, not when it ends. The first version assumed I had about three months left. With the right date, the March H-1B registration falls inside my OPT window.
+> Partly, not every company. Rondo and IEX ok, Genies no - I want manufacturing/operations
 
 **What I learned that I didn't expect:**
 
-> The sponsorship counts in the data are all even, so they're probably doubled. And I need to network now, before the March registration.
+> I now understand what goes on behind a job portal, and now I think about contacting companies before they post a job.
